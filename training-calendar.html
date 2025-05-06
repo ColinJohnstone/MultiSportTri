@@ -1,0 +1,1742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>10K to Sprint Triathlon Training Calendar</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            /* Light theme colors */
+            --primary-color: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary-color: #f8fafc;
+            --text-color: #334155;
+            --light-gray: #e2e8f0;
+            --dark-gray: #64748b;
+            --accent-red: #ef4444;
+            --run-color: #10b981;
+            --swim-color: #3b82f6;
+            --bike-color: #f59e0b;
+            --brick-color: #8b5cf6;
+            --rest-color: #64748b;
+            --cross-color: #8b5cf6;
+            --border-radius: 12px;
+            --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.18);
+        }
+
+        [data-theme="dark"] {
+            --primary-color: #818cf8;
+            --primary-dark: #6366f1;
+            --secondary-color: #1e293b;
+            --text-color: #e2e8f0;
+            --light-gray: #334155;
+            --dark-gray: #94a3b8;
+            --accent-red: #f87171;
+            --run-color: #34d399;
+            --swim-color: #60a5fa;
+            --bike-color: #fbbf24;
+            --brick-color: #a78bfa;
+            --rest-color: #94a3b8;
+            --cross-color: #a78bfa;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.08);
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+        
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            margin: 0;
+            padding: 16px;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--secondary-color) 0%, var(--light-gray) 100%);
+            line-height: 1.5;
+            min-height: 100vh;
+        }
+        
+        .theme-toggle {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 10px;
+            border-radius: 50%;
+            cursor: pointer;
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            box-shadow: var(--box-shadow);
+        }
+
+        .theme-toggle:hover {
+            transform: scale(1.1);
+        }
+        
+        h1 {
+            color: var(--primary-dark);
+            text-align: center;
+            margin-bottom: 24px;
+            font-weight: 700;
+            font-size: 2rem;
+            text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 small {
+            display: block;
+            font-size: 1.25rem;
+            color: var(--dark-gray);
+            margin-top: 8px;
+        }
+        
+        .month-container {
+            margin-bottom: 32px;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: var(--box-shadow);
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .month-container:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .month-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-align: center;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .calendar {
+            border-collapse: separate;
+            border-spacing: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+        
+        .calendar th {
+            background: var(--glass-bg);
+            color: var(--text-color);
+            padding: 12px 8px;
+            text-align: center;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border-bottom: 1px solid var(--glass-border);
+            height: 48px;
+        }
+        
+        .calendar td {
+            border: 1px solid var(--glass-border);
+            padding: 8px;
+            height: 120px;
+            vertical-align: top;
+            transition: all 0.3s ease;
+            font-size: 0.875rem;
+            position: relative;
+            overflow: hidden;
+            background: var(--glass-bg);
+        }
+
+        .calendar td:hover {
+            transform: scale(1.02);
+            z-index: 1;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+        
+        .calendar .date {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: inline-block;
+            width: 28px;
+            height: 28px;
+            line-height: 28px;
+            text-align: center;
+            border-radius: 50%;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            color: var(--text-color);
+        }
+
+        .calendar .empty {
+            background: var(--glass-bg);
+            opacity: 0.5;
+        }
+
+        .calendar .empty .date {
+            color: var(--dark-gray);
+        }
+        
+        .calendar .event-content {
+            font-size: 0.8125rem;
+            line-height: 1.4;
+            color: var(--text-color);
+            padding: 4px 0;
+        }
+
+        .calendar .event-content strong {
+            display: block;
+            margin-bottom: 4px;
+            color: var(--primary-dark);
+        }
+
+        .run, .swim, .bike, .brick, .rest, .cross {
+            position: relative;
+            overflow: hidden;
+        }
+
+        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .cross::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: currentColor;
+            opacity: 0.25;
+            z-index: -1;
+        }
+
+        .rest::before {
+            opacity: 0.3;
+        }
+        
+        .run { color: var(--run-color); }
+        .swim { color: var(--swim-color); }
+        .bike { color: var(--bike-color); }
+        .brick { color: var(--brick-color); }
+        .rest { 
+            color: var(--rest-color);
+            font-weight: 500;
+        }
+        .cross { color: var(--cross-color); }
+
+        .race-day {
+            background: linear-gradient(135deg, var(--accent-red), #dc2626) !important;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .race-day .date {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: rgba(255, 255, 255, 0.3);
+            color: white;
+        }
+
+        .race-day .event-content {
+            color: white;
+        }
+
+        .race-day .event-content strong {
+            color: white;
+        }
+
+        .legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 32px;
+            gap: 12px;
+            padding: 20px;
+            background: var(--glass-bg);
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            backdrop-filter: blur(8px);
+            border: 1px solid var(--glass-border);
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 4px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: var(--glass-bg);
+            font-size: 0.875rem;
+            border: 1px solid var(--glass-border);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .legend-item:hover {
+            transform: translateY(-2px);
+        }
+        
+        .legend-color {
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border-radius: 50%;
+            border: 1px solid var(--glass-border);
+        }
+        
+        .phase-title {
+            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            color: white;
+            padding: 16px 24px;
+            margin-top: 32px;
+            margin-bottom: 24px;
+            border-radius: var(--border-radius);
+            font-size: 1.1rem;
+            font-weight: 600;
+            box-shadow: var(--box-shadow);
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 8px;
+            }
+            
+            .calendar td {
+                height: 100px;
+                padding: 6px;
+            }
+            
+            .calendar .event-content {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .calendar td {
+                height: 80px;
+                padding: 4px;
+            }
+            
+            .calendar .date {
+                width: 24px;
+                height: 24px;
+                line-height: 24px;
+                margin-bottom: 4px;
+            }
+            
+            .calendar .event-content {
+                font-size: 0.7rem;
+            }
+        }
+
+        .legend-item.active {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .legend-item.active .legend-color {
+            border-color: white;
+        }
+
+        .current-day {
+            position: relative;
+            outline: 2px solid var(--primary-color);
+            outline-offset: -2px;
+        }
+
+        .current-day::after {
+            content: 'Today';
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            background: var(--primary-color);
+            color: white;
+            padding: 2px 6px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 500;
+        }
+
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(4px);
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal.show {
+            display: flex;
+            opacity: 1;
+        }
+
+        .modal-content {
+            background: var(--glass-bg);
+            backdrop-filter: blur(16px);
+            margin: auto;
+            padding: 24px;
+            border-radius: var(--border-radius);
+            max-width: 90%;
+            width: 500px;
+            position: relative;
+            transform: translateY(-20px);
+            transition: transform 0.3s ease;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--box-shadow);
+        }
+
+        .modal.show .modal-content {
+            transform: translateY(0);
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 16px;
+            right: 16px;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--text-color);
+            padding: 4px;
+            line-height: 1;
+        }
+
+        .modal-date {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            color: var(--primary-color);
+        }
+
+        .modal-activity {
+            font-size: 1.1rem;
+            line-height: 1.5;
+            color: var(--text-color);
+        }
+
+        @media (max-width: 768px) {
+            .modal-content {
+                width: 95%;
+                padding: 20px;
+            }
+        }
+
+        .notification {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--box-shadow);
+            font-size: 1.1rem;
+            line-height: 1.4;
+            color: var(--text-color);
+            max-width: 250px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            z-index: 1000;
+        }
+
+        .notification.show {
+            opacity: 1;
+        }
+
+        .notification-content {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+        }
+
+        .notification-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            flex-shrink: 0;
+            margin-top: 6px;
+        }
+
+        .notification-content > div:last-child {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .notification-content > div:last-child > div:first-child {
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .notification {
+                max-width: 200px;
+                font-size: 1rem;
+            }
+        }
+
+        .countdown-timer {
+            position: fixed;
+            top: 20px;
+            right: 80px;
+            background: var(--glass-bg);
+            backdrop-filter: blur(8px);
+            padding: 12px 16px;
+            border-radius: 10px;
+            border: 1px solid var(--glass-border);
+            box-shadow: var(--box-shadow);
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: var(--text-color);
+            z-index: 1000;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 4px;
+        }
+
+        .countdown-timer .next-race {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+        }
+
+        .countdown-timer .time {
+            font-size: 1.2rem;
+            color: var(--accent-red);
+        }
+
+        @media (max-width: 768px) {
+            .countdown-timer {
+                font-size: 0.9rem;
+                right: 70px;
+            }
+            
+            .countdown-timer .next-race {
+                font-size: 0.8rem;
+            }
+            
+            .countdown-timer .time {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <button class="theme-toggle" onclick="toggleTheme()" title="Toggle dark/light mode">
+        🌓
+    </button>
+
+    <div class="countdown-timer" id="countdownTimer">
+        <div class="next-race" id="nextRaceName">Next Race: Loading...</div>
+        <div class="time" id="countdownTime">Loading...</div>
+    </div>
+
+    <h1>10K to Sprint Triathlon Training<small>May - October 2025</small></h1>
+    
+    <div class="legend">
+        <div class="legend-item" onclick="filterEvents('all')">
+            <div class="legend-color" style="background-color: var(--primary-color);"></div>
+            <div>Show All</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('run')">
+            <div class="legend-color" style="background-color: var(--run-color);"></div>
+            <div>Run</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('swim')">
+            <div class="legend-color" style="background-color: var(--swim-color);"></div>
+            <div>Swim</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('bike')">
+            <div class="legend-color" style="background-color: var(--bike-color);"></div>
+            <div>Bike</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('brick')">
+            <div class="legend-color" style="background-color: var(--brick-color);"></div>
+            <div>Brick/Cross</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('rest')">
+            <div class="legend-color" style="background-color: var(--rest-color);"></div>
+            <div>Rest</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('race-day')">
+            <div class="legend-color" style="background-color: var(--accent-red);"></div>
+            <div>Race</div>
+        </div>
+    </div>
+
+    <!-- MAY 2025 -->
+    <div class="phase-title">Immediate Focus: Recovery + First 10K Race (May 5-11)</div>
+    <div class="month-container">
+        <div class="month-header">MAY 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th><span>Sunday</span></th>
+                    <th><span>Monday</span></th>
+                    <th><span>Tuesday</span></th>
+                    <th><span>Wednesday</span></th>
+                    <th><span>Thursday</span></th>
+                    <th><span>Friday</span></th>
+                    <th><span>Saturday</span></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="rest">
+                        <div class="date">1</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">2</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">3</div>
+                        <div class="event-content">-</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">4</div>
+                        <div class="event-content">Complete rest - focus on hydration & nutrition</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">5</div>
+                        <div class="event-content">Complete rest - focus on hydration & nutrition</div>
+                    </td>
+                    <td class="cross">
+                        <div class="date">6</div>
+                        <div class="event-content">Easy walk: 20min or gentle swim</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">7</div>
+                        <div class="event-content">Recovery run: 3-4km very easy jog (if feeling good)</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">8</div>
+                        <div class="event-content">Easy run: 5km with 3-4 strides</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">9</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">10</div>
+                        <div class="event-content">Recovery run: 3km very easy jog + 3-4 strides</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="race-day">
+                        <div class="date">11</div>
+                        <div class="event-content"><strong>Sporting Life 10K</strong></div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">12</div>
+                        <div class="event-content">Complete rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">13</div>
+                        <div class="event-content">Recovery run: 5km very easy</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">14</div>
+                        <div class="event-content">Rest or light cross-training</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">15</div>
+                        <div class="event-content">Easy run: 6km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">16</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">17</div>
+                        <div class="event-content">Long run: 8km with last 2km at moderate pace</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">18</div>
+                        <div class="event-content">10km easy long run</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">19</div>
+                        <div class="event-content">Rest or light cross-training</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">20</div>
+                        <div class="event-content">Speed work: 6×400m at 5K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">21</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">22</div>
+                        <div class="event-content">Base run: 8km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">23</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">24</div>
+                        <div class="event-content">Tempo run: 12km</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">25</div>
+                        <div class="event-content">Long run: 12km</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">26</div>
+                        <div class="event-content">Swim session: 30min - technique basics + 6×25m</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">27</div>
+                        <div class="event-content">Speed work: 5×800m at 10K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">28</div>
+                        <div class="event-content">Bike session: 30min easy ride + handling skills</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">29</div>
+                        <div class="event-content">Base run: 8km + core strength</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">30</div>
+                        <div class="event-content">Swim session: 20min technique + 4×50m</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">31</div>
+                        <div class="event-content">Mini-brick: 20min bike + Short run: 3km</div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JUNE 2025 -->
+    <div class="phase-title">Phase 2: Triathlon Introduction + 10K Prep (May 25-June 14)</div>
+    <div class="month-container">
+        <div class="month-header">JUNE 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="run">
+                        <div class="date">1</div>
+                        <div class="event-content">Long run: 12km with middle 4km at moderate pace</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">2</div>
+                        <div class="event-content">Swim session: 30min - technique + 8×25m</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">3</div>
+                        <div class="event-content">Speed work: 3×1km at 10K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">4</div>
+                        <div class="event-content">Bike session: 40min with 3×3min moderate</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">5</div>
+                        <div class="event-content">Tempo run: 8km with middle 3km moderate</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">6</div>
+                        <div class="event-content">Swim session: 25min - technique + 6×50m</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">7</div>
+                        <div class="event-content">Recovery run: 5km with 6×100m strides</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">8</div>
+                        <div class="event-content">Pace work: 10km with middle 3km at goal 10K pace</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">9</div>
+                        <div class="event-content">Easy swim: 20min - technique focus</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">10</div>
+                        <div class="event-content">Speed session: 6km with 4×400m at slightly faster than 10K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">11</div>
+                        <div class="event-content">Easy ride: 20min bike</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">12</div>
+                        <div class="event-content">Recovery run: 5km easy</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">13</div>
+                        <div class="event-content">Rest or very light 3km jog + strides</div>
+                    </td>
+                    <td class="race-day">
+                        <div class="date">14</div>
+                        <div class="event-content"><strong>Ultra Armour 10K</strong></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">15</div>
+                        <div class="event-content">Complete rest - recovery from 10K</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">16</div>
+                        <div class="event-content">Recovery run: 5km very easy</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">17</div>
+                        <div class="event-content">Swim session: 30min - technique + 200m continuous</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">18</div>
+                        <div class="event-content">Base run: 7km easy + core (20min)</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">19</div>
+                        <div class="event-content">Bike session: 30min - form and cadence</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">20</div>
+                        <div class="event-content">First proper brick: 30min bike + Short run: 3km</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">21</div>
+                        <div class="event-content">Swim session: 30min + 8km easy run</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">22</div>
+                        <div class="event-content">Swim session: 40min - technique + 6×50m</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">23</div>
+                        <div class="event-content">Speed work: 5×600m at 5K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">24</div>
+                        <div class="event-content">Bike session: 45min with 15min moderate</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">25</div>
+                        <div class="event-content">Base run: 8km + strength (20min)</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">26</div>
+                        <div class="event-content">Swim session: 300m continuous + 6×50m</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">27</div>
+                        <div class="event-content">Brick session: 40min bike + Short run: 4km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">28</div>
+                        <div class="event-content">Long run: 10km</div>
+                    </td> 
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">29</div>
+                        <div class="event-content">Swim session: 45min - technique + 400m continuous</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">30</div>
+                        <div class="event-content">Speed work: 7km with 4×400m at 5K pace</div>
+                    </td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- JULY 2025 -->
+    <div class="phase-title">Phase 3: Triathlon Focus (June 15-July 6) → Phase 4: Triathlon-Specific Training (July 7-August 10)</div>
+    <div class="month-container">
+        <div class="month-header">JULY 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="bike">
+                        <div class="date">1</div>
+                        <div class="event-content">Bike session: 50min with 3×5min race effort</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">2</div>
+                        <div class="event-content">Base run: 8km + core strength</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">3</div>
+                        <div class="event-content">Swim session: 500m continuous + technique drills</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">4</div>
+                        <div class="event-content">Brick session: 45min bike + Short run: 5km</div>
+                    </td>
+                    <td class="cross">
+                        <div class="date">5</div>
+                        <div class="event-content">Cross training: Easy 6km run + 20min swim</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">6</div>
+                        <div class="event-content">Swim session: 45min - technique + 500m continuous</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">7</div>
+                        <div class="event-content">Tempo run: 8km with middle 3km at 5K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">8</div>
+                        <div class="event-content">Bike session: 50min with 3×5min race effort</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">9</div>
+                        <div class="event-content">Recovery run: 6km easy + strength</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">10</div>
+                        <div class="event-content">Swim session: 600m continuous + specific drill work</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">11</div>
+                        <div class="event-content">Brick session: 45min bike + Short run: 5km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">12</div>
+                        <div class="event-content">Long run: 10km + transition practice</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">13</div>
+                        <div class="event-content">Swim session: 45min - 4×150m with 30s rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">14</div>
+                        <div class="event-content">Fartlek run: 8km with 5×1min fast/1min easy</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">15</div>
+                        <div class="event-content">Bike session: 60min with 30min race pace</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">16</div>
+                        <div class="event-content">Recovery run: 7km easy + core strength</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">17</div>
+                        <div class="event-content">Open water swim: 2×300m</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">18</div>
+                        <div class="event-content"><strong>Mini triathlon practice</strong>: 400m swim + 12km bike + Short run: 2.5km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">19</div>
+                        <div class="event-content">Recovery run: 8km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">20</div>
+                        <div class="event-content">Swim session: 50min - 600m continuous + 4×50m sprints</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">21</div>
+                        <div class="event-content">Speed work: 8km with 5×400m at 5K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">22</div>
+                        <div class="event-content">Bike session: 70min with 40min race effort</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">23</div>
+                        <div class="event-content">Race pace run: 8km with middle 3km at race pace</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">24</div>
+                        <div class="event-content">Swim session: Work toward 750m continuous</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">25</div>
+                        <div class="event-content">Full brick: 30min swim + 50min bike + Short run: 5km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">26</div>
+                        <div class="event-content">Recovery run: 10km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">27</div>
+                        <div class="event-content">Swim session: 50min - 6×100m race pace</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">28</div>
+                        <div class="event-content">Speed work: 8km with 4×800m at 5K pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">29</div>
+                        <div class="event-content">Bike session: 60min with 4×4min high intensity</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">30</div>
+                        <div class="event-content">Race pace run: 7km with 2km at race pace</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">31</div>
+                        <div class="event-content">Swim session: 500m race pace + transition practice</div>
+                    </td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- AUGUST 2025 -->
+    <div class="phase-title">Phase 4 (cont.): Triathlon-Specific Training → Phase 5: Taper Week (August 11-17)</div>
+    <div class="month-container">
+        <div class="month-header">AUGUST 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="brick">
+                        <div class="date">1</div>
+                        <div class="event-content">Race simulation: 500m swim + 15km bike + Short run: 4km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">2</div>
+                        <div class="event-content">Recovery run: 8km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">3</div>
+                        <div class="event-content">Swim session: 45min - technique and short bursts</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">4</div>
+                        <div class="event-content">Race pace work: 7km with 3×1km at race pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">5</div>
+                        <div class="event-content">Bike session: 50min with 3×5min race effort</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">6</div>
+                        <div class="event-content">Recovery run: 6km easy</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">7</div>
+                        <div class="event-content">Swim session: 2×350m with transition practice</div>
+                    </td>
+                    <td class="brick">
+                        <div class="date">8</div>
+                        <div class="event-content">Short brick: 30min bike + Short run: 3km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">9</div>
+                        <div class="event-content">Recovery run: 7km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="swim">
+                        <div class="date">10</div>
+                        <div class="event-content">Easy swim: 30min - technique focus</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">11</div>
+                        <div class="event-content">Speed work: 5km with 4×200m at race pace</div>
+                    </td>
+                    <td class="bike">
+                        <div class="date">12</div>
+                        <div class="event-content">Easy ride: 30min bike</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">13</div>
+                        <div class="event-content">Recovery run: 4km easy + light core work</div>
+                    </td>
+                    <td class="swim">
+                        <div class="date">14</div>
+                        <div class="event-content">Easy swim: 400m with focus on rhythm</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">15</div>
+                        <div class="event-content">Rest or very light 15min jog</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">16</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="race-day">
+                        <div class="date">17</div>
+                        <div class="event-content"><strong>Toronto MultiSport Triathlon</strong></div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">18</div>
+                        <div class="event-content">Complete rest - recovery from triathlon</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">19</div>
+                        <div class="event-content">Complete rest - recovery from triathlon</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">20</div>
+                        <div class="event-content">Recovery run: 5km very easy</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">21</div>
+                        <div class="event-content">Easy run: 6km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">22</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">23</div>
+                        <div class="event-content">Long run: 10km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">24</div>
+                        <div class="event-content">Base run: 8km + strides</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">25</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">26</div>
+                        <div class="event-content">Speed work: 6×400m at 5K pace</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">27</div>
+                        <div class="event-content">Base run: 8km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">28</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">29</div>
+                        <div class="event-content">Long run: 12km</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">30</div>
+                        <div class="event-content">Recovery run: 6km easy</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">31</div>
+                        <div class="event-content">Base run: 8km + strides</div>
+                    </td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- SEPTEMBER 2025 -->
+    <div class="phase-title">Phase 6: Marathon Training (August 18-October 19)</div>
+    <div class="month-container">
+        <div class="month-header">SEPTEMBER 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty"></td>
+                    <td class="run">
+                        <div class="date">1</div>
+                        <div class="event-content">Long run: 15km with middle 5km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">2</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">3</div>
+                        <div class="event-content">Speed work: 8×400m at 5K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">4</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">5</div>
+                        <div class="event-content">Base run: 10km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">6</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">7</div>
+                        <div class="event-content">Long run: 18km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">8</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">9</div>
+                        <div class="event-content">Tempo run: 12km with 6km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">10</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">11</div>
+                        <div class="event-content">Speed work: 5×800m at 10K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">12</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">13</div>
+                        <div class="event-content">Long run: 20km</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">14</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">15</div>
+                        <div class="event-content">Tempo run: 14km with 8km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">16</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">17</div>
+                        <div class="event-content">Speed work: 6×600m at 5K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">18</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">19</div>
+                        <div class="event-content">Base run: 12km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">20</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">21</div>
+                        <div class="event-content">Long run: 22km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">22</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">23</div>
+                        <div class="event-content">Tempo run: 16km with 10km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">24</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">25</div>
+                        <div class="event-content">Speed work: 4×1km at 10K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">26</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">27</div>
+                        <div class="event-content">Long run: 25km</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">28</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">29</div>
+                        <div class="event-content">Tempo run: 18km with 12km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">30</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- OCTOBER 2025 -->
+    <div class="phase-title">Phase 6 (cont.): Marathon Training → Phase 7: Marathon Taper (October 1-19)</div>
+    <div class="month-container">
+        <div class="month-header">OCTOBER 2025</div>
+        <table class="calendar">
+            <thead>
+                <tr>
+                    <th>Sunday</th>
+                    <th>Monday</th>
+                    <th>Tuesday</th>
+                    <th>Wednesday</th>
+                    <th>Thursday</th>
+                    <th>Friday</th>
+                    <th>Saturday</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                    <td class="run">
+                        <div class="date">1</div>
+                        <div class="event-content">Speed work: 5×400m at 5K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">2</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">3</div>
+                        <div class="event-content">Base run: 10km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">4</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">5</div>
+                        <div class="event-content">Long run: 28km</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">6</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">7</div>
+                        <div class="event-content">Tempo run: 16km with 10km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">8</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">9</div>
+                        <div class="event-content">Speed work: 4×800m at 10K pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">10</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">11</div>
+                        <div class="event-content">Long run: 20km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">12</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="run">
+                        <div class="date">13</div>
+                        <div class="event-content">Tempo run: 12km with 6km at marathon pace</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">14</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">15</div>
+                        <div class="event-content">Easy run: 8km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">16</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="run">
+                        <div class="date">17</div>
+                        <div class="event-content">Easy run: 6km</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">18</div>
+                        <div class="event-content">Rest</div>
+                    </td>
+                    <td class="race-day">
+                        <div class="date">19</div>
+                        <div class="event-content"><strong>Toronto Marathon</strong></div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">20</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">21</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">22</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">23</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">24</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">25</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">26</div>
+                        <div class="event-content">-</div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rest">
+                        <div class="date">27</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">28</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">29</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">30</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="rest">
+                        <div class="date">31</div>
+                        <div class="event-content">-</div>
+                    </td>
+                    <td class="empty"></td>
+                    <td class="empty"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <!-- Add modal HTML before closing body tag -->
+    <div class="modal" id="activityModal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">×</button>
+            <div class="modal-date" id="modalDate"></div>
+            <div class="modal-activity" id="modalActivity"></div>
+        </div>
+    </div>
+
+    <!-- Update notification HTML -->
+    <div class="notification" id="todayNotification">
+        <div class="notification-content">
+            <div class="notification-dot"></div>
+            <div>
+                <div style="font-weight: 600; color: var(--primary-color);">Today's Activity:</div>
+                <div id="todayActivity" style="margin-top: 4px;"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        function capitalizeFirstLetter(string) {
+            if (!string || string === '-') return string;
+            return string.charAt(0).toUpperCase() + string.slice(1);
+        }
+
+        function filterEvents(type, button = null) {
+            const cells = document.querySelectorAll('.calendar td');
+            const legendItems = document.querySelectorAll('.legend-item');
+            const activeButton = button || event.currentTarget;
+            
+            // Check if the clicked button is already active
+            if (activeButton.classList.contains('active')) {
+                // If it's active, deactivate it and show all
+                activeButton.classList.remove('active');
+                cells.forEach(cell => {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'scale(1)';
+                });
+                return;
+            }
+            
+            // Remove active class from all legend items
+            legendItems.forEach(item => item.classList.remove('active'));
+            
+            // Add active class to clicked legend item
+            activeButton.classList.add('active');
+            
+            cells.forEach(cell => {
+                if (type === 'all') {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'scale(1)';
+                } else if (type === 'brick' && (cell.classList.contains('brick') || cell.classList.contains('cross'))) {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'scale(1)';
+                } else if (cell.classList.contains(type)) {
+                    cell.style.opacity = '1';
+                    cell.style.transform = 'scale(1)';
+                } else {
+                    cell.style.opacity = '0.3';
+                    cell.style.transform = 'scale(0.95)';
+                }
+            });
+        }
+
+        // Initialize theme from localStorage
+        const savedTheme = localStorage.getItem('theme') || 'dark';
+        document.body.setAttribute('data-theme', savedTheme);
+
+        function showModal(date, activity) {
+            const modal = document.getElementById('activityModal');
+            const modalDate = document.getElementById('modalDate');
+            const modalActivity = document.getElementById('modalActivity');
+
+            modalDate.textContent = date;
+            modalActivity.textContent = activity;
+            modal.classList.add('show');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('activityModal');
+            modal.classList.remove('show');
+        }
+
+        function getMonthName(cell) {
+            const monthContainer = cell.closest('.month-container');
+            const monthHeader = monthContainer.querySelector('.month-header');
+            return monthHeader.textContent.split(' ')[0];
+        }
+
+        // Close modal when clicking outside
+        document.getElementById('activityModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeModal();
+            }
+        });
+
+        // Add click handlers for calendar cells and capitalize content
+        document.querySelectorAll('.calendar td').forEach(cell => {
+            const eventContent = cell.querySelector('.event-content');
+            if (eventContent) {
+                eventContent.textContent = capitalizeFirstLetter(eventContent.textContent);
+            }
+            
+            cell.addEventListener('click', () => {
+                const content = cell.querySelector('.event-content').textContent;
+                const date = cell.querySelector('.date').textContent;
+                if (content && content !== '-') {
+                    showModal(`${getMonthName(cell)} ${date}, 2025`, content);
+                }
+            });
+        });
+
+        // Initialize the calendar with "Show All" state and highlight current day
+        document.addEventListener('DOMContentLoaded', function() {
+            const showAllButton = document.querySelector('.legend-item');
+            if (showAllButton) {
+                filterEvents('all', showAllButton);
+            }
+
+            // Get current date
+            const today = new Date();
+            const currentMonth = today.toLocaleString('default', { month: 'long' }).toUpperCase();
+            const currentDay = today.getDate();
+
+            // Find and highlight current day
+            document.querySelectorAll('.calendar td').forEach(cell => {
+                const dateDiv = cell.querySelector('.date');
+                if (dateDiv) {
+                    const monthContainer = cell.closest('.month-container');
+                    const monthHeader = monthContainer.querySelector('.month-header');
+                    const cellMonth = monthHeader.textContent.split(' ')[0];
+                    
+                    if (dateDiv.textContent == currentDay && cellMonth === currentMonth) {
+                        cell.classList.add('current-day');
+                        const content = cell.querySelector('.event-content').textContent;
+                        if (content && content !== '-') {
+                            document.getElementById('todayActivity').textContent = content;
+                            document.getElementById('todayNotification').classList.add('show');
+                        }
+                    }
+                }
+            });
+        });
+
+        // Handle escape key for modal
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeModal();
+            }
+        });
+
+        // Add race dates and names
+        const races = [
+            { date: new Date('2025-05-11'), name: 'Sporting Life 10K' },
+            { date: new Date('2025-06-14'), name: 'Ultra Armour 10K' },
+            { date: new Date('2025-08-17'), name: 'Toronto MultiSport Triathlon' },
+            { date: new Date('2025-10-19'), name: 'Toronto Marathon' }
+        ];
+
+        function updateCountdown() {
+            const now = new Date();
+            let nextRace = null;
+            let timeDiff = Infinity;
+
+            // Find the next upcoming race
+            for (const race of races) {
+                const diff = race.date - now;
+                if (diff > 0 && diff < timeDiff) {
+                    timeDiff = diff;
+                    nextRace = race;
+                }
+            }
+
+            if (nextRace) {
+                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
+
+                document.getElementById('nextRaceName').textContent = `Next Race: ${nextRace.name}`;
+                document.getElementById('countdownTime').textContent = 
+                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
+            } else {
+                document.getElementById('nextRaceName').textContent = 'No upcoming races';
+                document.getElementById('countdownTime').textContent = '';
+            }
+        }
+
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown(); // Initial update
+    </script>
+</body>
+</html>
