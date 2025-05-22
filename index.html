@@ -22,7 +22,6 @@
             --bike-color: #f59e0b;
             --brick-color: #8b5cf6; /* Used for Brick and Cross */
             --rest-color: #64748b;
-            --test-color: #eab308; /* Yellow for Test */
             --race-day-color: var(--accent-red); 
             --none-color: #94a3b8;
             --completed-color: #22c55e; /* Distinct Green for completed */
@@ -45,7 +44,6 @@
             --bike-color: #fbbf24;
             --brick-color: #a78bfa; 
             --rest-color: #94a3b8;
-            --test-color: #facc15; 
             --race-day-color: var(--accent-red);
             --none-color: #475569;
             --completed-color: #4ade80; /* Distinct Green for completed - dark theme */
@@ -201,12 +199,12 @@
             color: var(--primary-dark);
         }
         
-        .run, .swim, .bike, .brick, .rest, .test, .cross, .race-day { 
+        .run, .swim, .bike, .brick, .rest, .cross, .race-day { 
             position: relative;
             overflow: hidden;
         }
 
-        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .test::before, .cross::before, .race-day::before {
+        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .cross::before, .race-day::before {
             content: '';
             position: absolute;
             top: 0;
@@ -226,16 +224,6 @@
         .brick { color: var(--brick-color); }
         .cross { color: var(--brick-color); } 
         .rest { color: var(--rest-color); font-weight: 500; }
-        .test { color: var(--test-color); }
-        /* Added .test::before rule */
-        .test::before { 
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: currentColor; /* Uses --test-color */
-            opacity: 0.25;
-            z-index: -1;
-        }
 
 
         .race-day {
@@ -265,7 +253,14 @@
             font-size: 0.8em;
             margin-left: 5px;
             font-weight: bold;
+            animation: fadeInCheck 0.3s ease-in-out;
         }
+
+        @keyframes fadeInCheck {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .workout-complete.has-event::before { 
             content: '';
             position: absolute;
@@ -277,8 +272,7 @@
             z-index: 0; 
         }
         .workout-complete.run::before, .workout-complete.swim::before, 
-        .workout-complete.bike::before, .workout-complete.brick::before, 
-        .workout-complete.test::before, .workout-complete.rest::before {
+        .workout-complete.bike::before, .workout-complete.brick::before, .workout-complete.rest::before {
             opacity: 0.15; 
         }
         .workout-complete.race-day::before { 
@@ -377,7 +371,7 @@
             backdrop-filter: blur(4px);
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out; /* Smoother easing */
         }
 
         .modal.show { display: flex; opacity: 1; }
@@ -392,7 +386,7 @@
             width: 500px;
             position: relative;
             transform: translateY(-20px);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out; /* Smoother easing */
             border: 1px solid var(--glass-border);
             box-shadow: var(--box-shadow);
         }
@@ -470,7 +464,7 @@
             color: var(--text-color);
             max-width: 250px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out; /* Smoother easing for consistency */
             z-index: 1000;
         }
 
@@ -562,10 +556,6 @@
         <div class="legend-item" onclick="filterEvents('brick', this)">
             <div class="legend-color" style="background-color: var(--brick-color);"></div>
             <div>Brick/Cross</div>
-        </div>
-         <div class="legend-item" onclick="filterEvents('test', this)">
-            <div class="legend-color" style="background-color: var(--test-color);"></div>
-            <div>Test</div>
         </div>
         <div class="legend-item" onclick="filterEvents('rest', this)">
             <div class="legend-color" style="background-color: var(--rest-color);"></div>
@@ -673,14 +663,6 @@
     },
     {
         "week": 1,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-05-27",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 1,
         "dayOfWeek": "Wednesday",
         "date": "2025-05-28",
         "activityType": "Bike",
@@ -689,27 +671,11 @@
     },
     {
         "week": 1,
-        "dayOfWeek": "Thursday",
-        "date": "2025-05-29",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 1,
         "dayOfWeek": "Friday",
         "date": "2025-05-30",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 1,
-        "dayOfWeek": "Saturday",
-        "date": "2025-05-31",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 1,
@@ -897,14 +863,6 @@
     },
     {
         "week": 5,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-06-24",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 5,
         "dayOfWeek": "Wednesday",
         "date": "2025-06-25",
         "activityType": "Bike",
@@ -913,27 +871,11 @@
     },
     {
         "week": 5,
-        "dayOfWeek": "Thursday",
-        "date": "2025-06-26",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 5,
         "dayOfWeek": "Friday",
         "date": "2025-06-27",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 5,
-        "dayOfWeek": "Saturday",
-        "date": "2025-06-28",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 5,
@@ -1121,14 +1063,6 @@
     },
     {
         "week": 9,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-07-22",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 9,
         "dayOfWeek": "Wednesday",
         "date": "2025-07-23",
         "activityType": "Bike",
@@ -1137,27 +1071,11 @@
     },
     {
         "week": 9,
-        "dayOfWeek": "Thursday",
-        "date": "2025-07-24",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 9,
         "dayOfWeek": "Friday",
         "date": "2025-07-25",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 9,
-        "dayOfWeek": "Saturday",
-        "date": "2025-07-26",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 9,
@@ -1332,7 +1250,7 @@
         "dayOfWeek": "Sunday",
         "date": "2025-08-17",
         "activityType": "Race",
-        "title": "RACE DAY",
+        "title": "Toronto Island Multisport Triathlon",
         "details": "Arrive early, trust your sprint training plan, have fun!"
     }
 ]
@@ -1384,7 +1302,7 @@
                     typeMatch = true;
                 } else if (type === 'empty' && cell.classList.contains('empty') && !cell.classList.contains('has-event')) {
                      typeMatch = true;
-                } else if (cell.classList.contains(type.toLowerCase())) { 
+                } else if (cell.classList.contains(type.toLowerCase())) { // This handles run, swim, bike, rest, race-day
                     typeMatch = true;
                 }
 
@@ -1580,7 +1498,7 @@
         const races = [
             { date: new Date('2025-05-11T08:30:00-04:00'), name: 'Sporting Life 10K' },
             { date: new Date('2025-06-14T08:30:00-04:00'), name: 'Ultra Armour 10K' },
-            { date: new Date(JSON.parse(document.getElementById('trainingPlanData').textContent).find(e => e.activityType === "Race").date + 'T08:30:00-04:00'), name: 'Toronto MultiSport Triathlon (Plan)' }, 
+            { date: new Date(JSON.parse(document.getElementById('trainingPlanData').textContent).find(e => e.activityType === "Race").date + 'T08:30:00-04:00'), name: 'Toronto Island Multisport Triathlon (Plan)' }, 
             { date: new Date('2025-10-19T08:30:00-04:00'), name: 'Toronto Marathon' }
         ];
 

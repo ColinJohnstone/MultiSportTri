@@ -9,14 +9,6 @@
     },
     {
         "week": 1,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-05-27",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 1,
         "dayOfWeek": "Wednesday",
         "date": "2025-05-28",
         "activityType": "Bike",
@@ -25,27 +17,11 @@
     },
     {
         "week": 1,
-        "dayOfWeek": "Thursday",
-        "date": "2025-05-29",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 1,
         "dayOfWeek": "Friday",
         "date": "2025-05-30",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 1,
-        "dayOfWeek": "Saturday",
-        "date": "2025-05-31",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 1,
@@ -233,14 +209,6 @@
     },
     {
         "week": 5,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-06-24",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 5,
         "dayOfWeek": "Wednesday",
         "date": "2025-06-25",
         "activityType": "Bike",
@@ -249,27 +217,11 @@
     },
     {
         "week": 5,
-        "dayOfWeek": "Thursday",
-        "date": "2025-06-26",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 5,
         "dayOfWeek": "Friday",
         "date": "2025-06-27",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 5,
-        "dayOfWeek": "Saturday",
-        "date": "2025-06-28",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 5,
@@ -457,14 +409,6 @@
     },
     {
         "week": 9,
-        "dayOfWeek": "Tuesday",
-        "date": "2025-07-22",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
-        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
-    },
-    {
-        "week": 9,
         "dayOfWeek": "Wednesday",
         "date": "2025-07-23",
         "activityType": "Bike",
@@ -473,27 +417,11 @@
     },
     {
         "week": 9,
-        "dayOfWeek": "Thursday",
-        "date": "2025-07-24",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
-        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
-    },
-    {
-        "week": 9,
         "dayOfWeek": "Friday",
         "date": "2025-07-25",
         "activityType": "Swim",
         "title": "20-Minute Easy Swim",
         "details": "Swim easy, taking breaks as needed."
-    },
-    {
-        "week": 9,
-        "dayOfWeek": "Saturday",
-        "date": "2025-07-26",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
-        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
         "week": 9,
@@ -668,7 +596,7 @@
         "dayOfWeek": "Sunday",
         "date": "2025-08-17",
         "activityType": "Race",
-        "title": "RACE DAY",
+        "title": "Toronto Island Multisport Triathlon",
         "details": "Arrive early, trust your sprint training plan, have fun!"
     }
 ]
