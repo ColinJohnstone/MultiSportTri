@@ -1,0 +1,674 @@
+[
+    {
+        "week": 1,
+        "dayOfWeek": "Monday",
+        "date": "2025-05-26",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off, including as much time off your feet as possible.\nSpend some time preparing meals for the week, as well as arranging work\nand family schedules to best allow for succesful completion of assigned\nworkouts."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-05-27",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-05-28",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Thursday",
+        "date": "2025-05-29",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Friday",
+        "date": "2025-05-30",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Saturday",
+        "date": "2025-05-31",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-01",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-02",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-03",
+        "activityType": "Swim",
+        "title": "25-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 3 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-04",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-05",
+        "activityType": "Run",
+        "title": "40-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 4 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-06",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-07",
+        "activityType": "Bike",
+        "title": "60-Minute Build Bike",
+        "details": "WU- 12 minutes easy\nMS- 4 x 8 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 10 minutes easy"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-08",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-09",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-10",
+        "activityType": "Swim",
+        "title": "30-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 4 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-11",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-12",
+        "activityType": "Run",
+        "title": "45-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 5 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-13",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-14",
+        "activityType": "Brick",
+        "title": "60-Min Build Bike + 5-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 9 minutes TP (test pace), with 2 minutes RI (recovery\ninterval). Then run 5 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-15",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-16",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off, including as much time off your feet as possible.\nSpend some time preparing meals for the week, as well as arranging work\nand family schedules to best allow for succesful completion of assigned\nworkouts."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-17",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-18",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-19",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-20",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-21",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-22",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-23",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-24",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-25",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-26",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-27",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-28",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-29",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-30",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-01",
+        "activityType": "Swim",
+        "title": "30-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 4 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-02",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-03",
+        "activityType": "Run",
+        "title": "45-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 5 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-04",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-05",
+        "activityType": "Bike",
+        "title": "60-Minute Build Bike",
+        "details": "WU- 12 minutes easy\nMS- 4 x 9 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 10 minutes easy"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-06",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-07",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-08",
+        "activityType": "Swim",
+        "title": "35-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 5 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-09",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-10",
+        "activityType": "Run",
+        "title": "50-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 6 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-11",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-12",
+        "activityType": "Brick",
+        "title": "65-Min Build Bike + 8-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 10 minutes TP (test pace), with 2 minutes RI (recovery\ninterval). Then run 8 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-13",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-14",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-15",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-16",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-17",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-18",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-19",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-20",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-21",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-22",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-23",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-24",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-25",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-26",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-27",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-28",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-29",
+        "activityType": "Swim",
+        "title": "35-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 5 minutes TP (test pace), with :30 sec RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-30",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-31",
+        "activityType": "Run",
+        "title": "50-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 6 minutes TP (test pace), with 1 minute RI (recovery interval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-01",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-02",
+        "activityType": "Brick",
+        "title": "65-Min Build Bike + 10-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 10 minutes TP (test pace), with 1 minute RI (recovery\ninterval). Then run 10 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-03",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Monday",
+        "date": "2025-08-04",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-08-05",
+        "activityType": "Swim",
+        "title": "25-Minute Peak Swim",
+        "details": "WU: 5 minutes easy\nMS: Swim 75% of goal race distance at goal race pace. Take breaks as\nneeded."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-08-06",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Thursday",
+        "date": "2025-08-07",
+        "activityType": "Run",
+        "title": "30-Minute Peak Run",
+        "details": "WU- walk/ jog 5 minutes easy\nMS- Run/ walk 50% of goal race distance at goal race pace.\nCD- walk/ jog 5 minutes easy"
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-08",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-09",
+        "activityType": "Bike",
+        "title": "45-Minute Peak Bike",
+        "details": "WU- 5 minutes easy spin\nMS- Bike 75% of goal race distance at goal race pace alternating 10\nminutes \u2018on\u2019, 5 minutes \u2018easy\u2019.\nCD- 5 minutes easy spin."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-10",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Monday",
+        "date": "2025-08-11",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-08-12",
+        "activityType": "Run",
+        "title": "20-Minute Taper Run",
+        "details": "Run 33% of goal race distance at goal race pace alternating run 4\nminutes/ brisk walk 1 minute."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-08-13",
+        "activityType": "Bike",
+        "title": "30-Minute Taper Bike",
+        "details": "Ride 50% of goal race distance at goal race pace alternating 10 minutes\n\u2018on\u2019, 5 minutes \u2018easy.\u2019"
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Thursday",
+        "date": "2025-08-14",
+        "activityType": "Swim",
+        "title": "15-Minute Taper Swim",
+        "details": "Swim 50% of goal race distance at goal race pace, taking breaks as\nneeded. Practice in wetsuit if you plan to wear one in the race. Use\nthe swim venue if possible, otherwise it is OK to wear the wetsuit in\nthe pool."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-15",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-16",
+        "activityType": "Brick",
+        "title": "20-Min Pre-Race Brick",
+        "details": "Bike 15 minutes progressing to race pace, then run 5 minutes\nprogressing to race pace."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-17",
+        "activityType": "Race",
+        "title": "RACE DAY",
+        "details": "Arrive early, trust your sprint training plan, have fun!"
+    }
+]
