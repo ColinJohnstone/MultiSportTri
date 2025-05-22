@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>10K to Sprint Triathlon Training Calendar</title>
+    <title>Sprint Triathlon Workout Tracker</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -17,13 +17,15 @@
             --light-gray: #e2e8f0;
             --dark-gray: #64748b;
             --accent-red: #ef4444;
-            --run-color: #10b981;
+            --run-color: #10b981; 
             --swim-color: #3b82f6;
             --bike-color: #f59e0b;
-            --brick-color: #8b5cf6;
+            --brick-color: #8b5cf6; /* Used for Brick and Cross */
             --rest-color: #64748b;
-            --cross-color: #8b5cf6;
+            --test-color: #eab308; /* Yellow for Test */
+            --race-day-color: var(--accent-red); 
             --none-color: #94a3b8;
+            --completed-color: #22c55e; /* Distinct Green for completed */
             --border-radius: 12px;
             --box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
             --glass-bg: rgba(255, 255, 255, 0.7);
@@ -38,13 +40,15 @@
             --light-gray: #334155;
             --dark-gray: #94a3b8;
             --accent-red: #f87171;
-            --run-color: #34d399;
+            --run-color: #34d399; 
             --swim-color: #60a5fa;
             --bike-color: #fbbf24;
-            --brick-color: #a78bfa;
+            --brick-color: #a78bfa; 
             --rest-color: #94a3b8;
-            --cross-color: #a78bfa;
+            --test-color: #facc15; 
+            --race-day-color: var(--accent-red);
             --none-color: #475569;
+            --completed-color: #4ade80; /* Distinct Green for completed - dark theme */
             --glass-bg: rgba(30, 41, 59, 0.7);
             --glass-border: rgba(255, 255, 255, 0.08);
         }
@@ -156,12 +160,14 @@
             position: relative;
             overflow: hidden;
             background: var(--glass-bg);
+            cursor: default; 
         }
-
-        .calendar td:hover {
+        
+        .calendar td.has-event:hover {
             transform: scale(1.02);
             z-index: 1;
             box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            cursor: pointer; 
         }
         
         .calendar .date {
@@ -176,11 +182,6 @@
             background: var(--glass-bg);
             border: 1px solid var(--glass-border);
             color: var(--text-color);
-        }
-
-        .calendar .empty {
-            background: var(--glass-bg);
-            opacity: 0.5;
         }
 
         .calendar .empty .date {
@@ -199,13 +200,13 @@
             margin-bottom: 4px;
             color: var(--primary-dark);
         }
-
-        .run, .swim, .bike, .brick, .rest, .cross {
+        
+        .run, .swim, .bike, .brick, .rest, .test, .cross, .race-day { 
             position: relative;
             overflow: hidden;
         }
 
-        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .cross::before {
+        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .test::before, .cross::before, .race-day::before {
             content: '';
             position: absolute;
             top: 0;
@@ -217,25 +218,32 @@
             z-index: -1;
         }
 
-        .rest::before {
-            opacity: 0.3;
-        }
+        .rest::before { opacity: 0.3; }
         
         .run { color: var(--run-color); }
         .swim { color: var(--swim-color); }
         .bike { color: var(--bike-color); }
         .brick { color: var(--brick-color); }
-        .rest { 
-            color: var(--rest-color);
-            font-weight: 500;
+        .cross { color: var(--brick-color); } 
+        .rest { color: var(--rest-color); font-weight: 500; }
+        .test { color: var(--test-color); }
+        /* Added .test::before rule */
+        .test::before { 
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: currentColor; /* Uses --test-color */
+            opacity: 0.25;
+            z-index: -1;
         }
-        .cross { color: var(--cross-color); }
+
 
         .race-day {
-            background: linear-gradient(135deg, var(--accent-red), #dc2626) !important;
+            background: linear-gradient(135deg, var(--accent-red), #dc2626) !important; 
             color: white;
             font-weight: 600;
         }
+        .race-day::before { display: none; } 
         
         .race-day .date {
             background: rgba(255, 255, 255, 0.2);
@@ -243,21 +251,48 @@
             color: white;
         }
 
-        .race-day .event-content {
-            color: white;
+        .race-day .event-content { color: white; }
+        .race-day .event-content strong { color: white; }
+
+        /* Workout Completion Styling */
+        .workout-complete .event-content {
+            text-decoration: line-through;
+            opacity: 0.7;
+        }
+        .workout-complete > .date::after { 
+            content: '\2714'; 
+            color: var(--completed-color); /* Use new variable */
+            font-size: 0.8em;
+            margin-left: 5px;
+            font-weight: bold;
+        }
+        .workout-complete.has-event::before { 
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 4px;
+            background-color: var(--completed-color); /* Use new variable */
+            z-index: 0; 
+        }
+        .workout-complete.run::before, .workout-complete.swim::before, 
+        .workout-complete.bike::before, .workout-complete.brick::before, 
+        .workout-complete.test::before, .workout-complete.rest::before {
+            opacity: 0.15; 
+        }
+        .workout-complete.race-day::before { 
+            display: none;
         }
 
-        .race-day .event-content strong {
-            color: white;
-        }
 
         .legend {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
             margin-bottom: 32px;
-            gap: 12px;
-            padding: 20px;
+            gap: 10px; /* Adjusted gap */
+            padding: 15px; /* Adjusted padding */
             background: var(--glass-bg);
             border-radius: var(--border-radius);
             box-shadow: var(--box-shadow);
@@ -269,71 +304,39 @@
             display: flex;
             align-items: center;
             margin: 4px;
-            padding: 8px 16px;
+            padding: 8px 12px; /* Adjusted padding */
             border-radius: 20px;
             background: var(--glass-bg);
             font-size: 0.875rem;
             border: 1px solid var(--glass-border);
             cursor: pointer;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, background-color 0.2s ease, color 0.2s ease;
         }
 
-        .legend-item:hover {
-            transform: translateY(-2px);
-        }
+        .legend-item:hover { transform: translateY(-2px); }
         
         .legend-color {
-            width: 20px;
-            height: 20px;
+            width: 18px; /* Adjusted size */
+            height: 18px; /* Adjusted size */
             margin-right: 8px;
             border-radius: 50%;
             border: 1px solid var(--glass-border);
         }
-        
-        .phase-title {
-            background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
-            color: white;
-            padding: 16px 24px;
-            margin-top: 32px;
-            margin-bottom: 24px;
-            border-radius: var(--border-radius);
-            font-size: 1.1rem;
-            font-weight: 600;
-            box-shadow: var(--box-shadow);
-            text-align: center;
-        }
-        
+                
         @media (max-width: 768px) {
-            body {
-                padding: 8px;
-            }
-            
-            .calendar td {
-                height: 100px;
-                padding: 6px;
-            }
-            
-            .calendar .event-content {
-                font-size: 0.75rem;
-            }
+            body { padding: 8px; }
+            .calendar td { height: 100px; padding: 6px; }
+            .calendar .event-content { font-size: 0.75rem; }
+            .legend { gap: 8px; padding: 10px; }
+            .legend-item { padding: 6px 10px; font-size: 0.8rem; }
         }
 
         @media (max-width: 480px) {
-            .calendar td {
-                height: 80px;
-                padding: 4px;
-            }
-            
-            .calendar .date {
-                width: 24px;
-                height: 24px;
-                line-height: 24px;
-                margin-bottom: 4px;
-            }
-            
-            .calendar .event-content {
-                font-size: 0.7rem;
-            }
+            .calendar td { height: 80px; padding: 4px; }
+            .calendar .date { width: 24px; height: 24px; line-height: 24px; margin-bottom: 4px; }
+            .calendar .event-content { font-size: 0.7rem; }
+            .legend { flex-direction: column; align-items: center; }
+            .legend-item { width: 80%; justify-content: center; }
         }
 
         .legend-item.active {
@@ -342,9 +345,7 @@
             transform: translateY(-2px);
         }
 
-        .legend-item.active .legend-color {
-            border-color: white;
-        }
+        .legend-item.active .legend-color { border-color: white; }
 
         .current-day {
             position: relative;
@@ -379,10 +380,7 @@
             transition: opacity 0.3s ease;
         }
 
-        .modal.show {
-            display: flex;
-            opacity: 1;
-        }
+        .modal.show { display: flex; opacity: 1; }
 
         .modal-content {
             background: var(--glass-bg);
@@ -399,9 +397,7 @@
             box-shadow: var(--box-shadow);
         }
 
-        .modal.show .modal-content {
-            transform: translateY(0);
-        }
+        .modal.show .modal-content { transform: translateY(0); }
 
         .modal-close {
             position: absolute;
@@ -427,13 +423,36 @@
             font-size: 1.1rem;
             line-height: 1.5;
             color: var(--text-color);
+            white-space: pre-wrap; 
+            margin-bottom: 20px; 
         }
 
+        #markCompleteBtn {
+            background-color: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 12px 20px; /* Increased padding */
+            border-radius: var(--border-radius); /* Consistent border radius */
+            cursor: pointer;
+            font-size: 1rem; /* Increased font size */
+            font-weight: 600; /* Bolder font */
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            display: block; 
+            margin: 10px auto 0; /* Adjusted margin */
+            min-width: 200px; /* Ensure decent width */
+            text-align: center;
+        }
+        #markCompleteBtn:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-1px); /* Slight lift on hover */
+        }
+        #markCompleteBtn:active {
+            transform: translateY(0px); /* Click effect */
+        }
+
+
         @media (max-width: 768px) {
-            .modal-content {
-                width: 95%;
-                padding: 20px;
-            }
+            .modal-content { width: 95%; padding: 20px; }
         }
 
         .notification {
@@ -455,41 +474,15 @@
             z-index: 1000;
         }
 
-        .notification.show {
-            opacity: 1;
-        }
+        .notification.show { opacity: 1; }
 
-        .notification-content {
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .notification-dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: var(--primary-color);
-            flex-shrink: 0;
-            margin-top: 6px;
-        }
-
-        .notification-content > div:last-child {
-            display: flex;
-            flex-direction: column;
-            gap: 4px;
-        }
-
-        .notification-content > div:last-child > div:first-child {
-            font-weight: 600;
-            color: var(--primary-color);
-        }
+        .notification-content { display: flex; align-items: flex-start; gap: 10px; }
+        .notification-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--primary-color); flex-shrink: 0; margin-top: 6px; }
+        .notification-content > div:last-child { display: flex; flex-direction: column; gap: 4px; }
+        .notification-content > div:last-child > div:first-child { font-weight: 600; color: var(--primary-color); }
 
         @media (max-width: 768px) {
-            .notification {
-                max-width: 200px;
-                font-size: 1rem;
-            }
+            .notification { max-width: 200px; font-size: 1rem; }
         }
 
         .countdown-timer {
@@ -513,36 +506,16 @@
             gap: 4px;
         }
 
-        .countdown-timer .next-race {
-            font-size: 0.9rem;
-            color: var(--primary-color);
-        }
-
-        .countdown-timer .time {
-            font-size: 1.2rem;
-            color: var(--accent-red);
-        }
+        .countdown-timer .next-race { font-size: 0.9rem; color: var(--primary-color); }
+        .countdown-timer .time { font-size: 1.2rem; color: var(--accent-red); }
 
         @media (max-width: 768px) {
-            .countdown-timer {
-                font-size: 0.9rem;
-                right: 70px;
-            }
-            
-            .countdown-timer .next-race {
-                font-size: 0.8rem;
-            }
-            
-            .countdown-timer .time {
-                font-size: 1rem;
-            }
+            .countdown-timer { font-size: 0.9rem; right: 70px; }
+            .countdown-timer .next-race { font-size: 0.8rem; }
+            .countdown-timer .time { font-size: 1rem; }
         }
 
-        .empty {
-            color: var(--none-color);
-            position: relative;
-        }
-
+        .empty { color: var(--none-color); position: relative; }
         .empty::before {
             content: '';
             position: absolute;
@@ -554,6 +527,7 @@
             opacity: 0.1;
             z-index: -1;
         }
+        .calendar td.empty { background: var(--glass-bg); opacity: 0.6; } 
     </style>
 </head>
 <body>
@@ -566,1004 +540,117 @@
         <div class="time" id="countdownTime">Loading...</div>
     </div>
 
-    <h1>10K to Sprint Triathlon Training<small>May - October 2025</small></h1>
+    <h1>Sprint Triathlon Workout Tracker<small>12-Week Training Plan</small></h1>
     
     <div class="legend">
-        <div class="legend-item" onclick="filterEvents('all')">
+        <div class="legend-item" onclick="filterEvents('all', this)">
             <div class="legend-color" style="background-color: var(--primary-color);"></div>
             <div>Show All</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('run')">
+        <div class="legend-item" onclick="filterEvents('run', this)">
             <div class="legend-color" style="background-color: var(--run-color);"></div>
             <div>Run</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('swim')">
+        <div class="legend-item" onclick="filterEvents('swim', this)">
             <div class="legend-color" style="background-color: var(--swim-color);"></div>
             <div>Swim</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('bike')">
+        <div class="legend-item" onclick="filterEvents('bike', this)">
             <div class="legend-color" style="background-color: var(--bike-color);"></div>
             <div>Bike</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('brick')">
+        <div class="legend-item" onclick="filterEvents('brick', this)">
             <div class="legend-color" style="background-color: var(--brick-color);"></div>
             <div>Brick/Cross</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('rest')">
+         <div class="legend-item" onclick="filterEvents('test', this)">
+            <div class="legend-color" style="background-color: var(--test-color);"></div>
+            <div>Test</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('rest', this)">
             <div class="legend-color" style="background-color: var(--rest-color);"></div>
             <div>Rest</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('race-day')">
+        <div class="legend-item" onclick="filterEvents('race-day', this)">
             <div class="legend-color" style="background-color: var(--accent-red);"></div>
             <div>Race</div>
         </div>
-        <div class="legend-item" onclick="filterEvents('empty')">
+        <div class="legend-item" onclick="filterEvents('completed', this)"> <!-- New Completed Filter -->
+            <div class="legend-color" style="background-color: var(--completed-color);"></div>
+            <div>Completed</div>
+        </div>
+        <div class="legend-item" onclick="filterEvents('empty', this)">
             <div class="legend-color" style="background-color: var(--dark-gray);"></div>
             <div>None</div>
         </div>
     </div>
 
-    <!-- MAY 2025 -->
-    <div class="month-container">
-        <div class="month-header">MAY 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th><span>Sunday</span></th>
-                    <th><span>Monday</span></th>
-                    <th><span>Tuesday</span></th>
-                    <th><span>Wednesday</span></th>
-                    <th><span>Thursday</span></th>
-                    <th><span>Friday</span></th>
-                    <th><span>Saturday</span></th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="race-day">
-                        <div class="date">11</div>
-                        <div class="event-content"><strong>Sporting Life 10K</strong></div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">14</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">17</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">19</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">31</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+    <div id="calendar-container">
+        <div class="month-container" data-month="4" data-year="2025"> 
+            <div class="month-header">MAY 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="month-container" data-month="5" data-year="2025">
+            <div class="month-header">JUNE 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="month-container" data-month="6" data-year="2025">
+            <div class="month-header">JULY 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="month-container" data-month="7" data-year="2025">
+            <div class="month-header">AUGUST 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="month-container" data-month="8" data-year="2025">
+            <div class="month-header">SEPTEMBER 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        <div class="month-container" data-month="9" data-year="2025">
+            <div class="month-header">OCTOBER 2025</div>
+            <table class="calendar">
+                <thead>
+                    <tr><th>Sun</th><th>Mon</th><th>Tue</th><th>Wed</th><th>Thu</th><th>Fri</th><th>Sat</th></tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
     </div>
 
-    <!-- JUNE 2025 -->
-    <div class="month-container">
-        <div class="month-header">JUNE 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">11</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="race-day">
-                        <div class="date">14</div>
-                        <div class="event-content"><strong>Ultra Armour 10K</strong></div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">17</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">19</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- JULY 2025 -->
-    <div class="month-container">
-        <div class="month-header">JULY 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">11</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">14</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">17</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">19</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">31</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- AUGUST 2025 -->
-    <div class="month-container">
-        <div class="month-header">AUGUST 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">11</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">14</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="race-day">
-                        <div class="date">17</div>
-                        <div class="event-content"><strong>Toronto MultiSport Triathlon</strong></div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">19</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">31</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- SEPTEMBER 2025 -->
-    <div class="month-container">
-        <div class="month-header">SEPTEMBER 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty"></td>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">11</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">14</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">17</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">19</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- OCTOBER 2025 -->
-    <div class="month-container">
-        <div class="month-header">OCTOBER 2025</div>
-        <table class="calendar">
-            <thead>
-                <tr>
-                    <th>Sunday</th>
-                    <th>Monday</th>
-                    <th>Tuesday</th>
-                    <th>Wednesday</th>
-                    <th>Thursday</th>
-                    <th>Friday</th>
-                    <th>Saturday</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty"></td>
-                    <td class="empty">
-                        <div class="date">1</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">2</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">3</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">4</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">5</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">6</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">7</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">8</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">9</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">10</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">11</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">12</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">13</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">14</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">15</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">16</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">17</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">18</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="race-day">
-                        <div class="date">19</div>
-                        <div class="event-content"><strong>Toronto Marathon</strong></div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">20</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">21</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">22</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">23</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">24</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">25</div>
-                        <div class="event-content">-</div>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="empty">
-                        <div class="date">26</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">27</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">28</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">29</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">30</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty">
-                        <div class="date">31</div>
-                        <div class="event-content">-</div>
-                    </td>
-                    <td class="empty"></td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
-
-    <!-- Add modal HTML before closing body tag -->
     <div class="modal" id="activityModal">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal()">×</button>
             <div class="modal-date" id="modalDate"></div>
             <div class="modal-activity" id="modalActivity"></div>
+            <button id="markCompleteBtn">Mark as Complete</button>
         </div>
     </div>
 
-    <!-- Update notification HTML -->
     <div class="notification" id="todayNotification">
         <div class="notification-content">
             <div class="notification-dot"></div>
@@ -1573,6 +660,683 @@
             </div>
         </div>
     </div>
+
+    <script type="application/json" id="trainingPlanData">
+[
+    {
+        "week": 1,
+        "dayOfWeek": "Monday",
+        "date": "2025-05-26",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off, including as much time off your feet as possible.\nSpend some time preparing meals for the week, as well as arranging work\nand family schedules to best allow for succesful completion of assigned\nworkouts."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-05-27",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-05-28",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Thursday",
+        "date": "2025-05-29",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Friday",
+        "date": "2025-05-30",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Saturday",
+        "date": "2025-05-31",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 1,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-01",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-02",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-03",
+        "activityType": "Swim",
+        "title": "25-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 3 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-04",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-05",
+        "activityType": "Run",
+        "title": "40-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 4 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-06",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-07",
+        "activityType": "Bike",
+        "title": "60-Minute Build Bike",
+        "details": "WU- 12 minutes easy\nMS- 4 x 8 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 10 minutes easy"
+    },
+    {
+        "week": 2,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-08",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-09",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-10",
+        "activityType": "Swim",
+        "title": "30-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 4 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-11",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-12",
+        "activityType": "Run",
+        "title": "45-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 5 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-13",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-14",
+        "activityType": "Brick",
+        "title": "60-Min Build Bike + 5-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 9 minutes TP (test pace), with 2 minutes RI (recovery\ninterval). Then run 5 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 3,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-15",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-16",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off, including as much time off your feet as possible.\nSpend some time preparing meals for the week, as well as arranging work\nand family schedules to best allow for succesful completion of assigned\nworkouts."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-17",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-18",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-19",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-20",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-21",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 4,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-22",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-23",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-06-24",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-06-25",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Thursday",
+        "date": "2025-06-26",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Friday",
+        "date": "2025-06-27",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Saturday",
+        "date": "2025-06-28",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 5,
+        "dayOfWeek": "Sunday",
+        "date": "2025-06-29",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Monday",
+        "date": "2025-06-30",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-01",
+        "activityType": "Swim",
+        "title": "30-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 4 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-02",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-03",
+        "activityType": "Run",
+        "title": "45-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 5 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-04",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-05",
+        "activityType": "Bike",
+        "title": "60-Minute Build Bike",
+        "details": "WU- 12 minutes easy\nMS- 4 x 9 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 10 minutes easy"
+    },
+    {
+        "week": 6,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-06",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-07",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-08",
+        "activityType": "Swim",
+        "title": "35-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 5 minutes TP (test pace), with 1 minute RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-09",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-10",
+        "activityType": "Run",
+        "title": "50-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 6 minutes TP (test pace), with 2 minutes RI (recovery\ninterval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-11",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-12",
+        "activityType": "Brick",
+        "title": "65-Min Build Bike + 8-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 10 minutes TP (test pace), with 2 minutes RI (recovery\ninterval). Then run 8 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 7,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-13",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-14",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-15",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-16",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-17",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-18",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-19",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 8,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-20",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-21",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-22",
+        "activityType": "Test",
+        "title": "30-Minute Swim Test",
+        "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-23",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-24",
+        "activityType": "Test",
+        "title": "45-Minute Run Test",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Friday",
+        "date": "2025-07-25",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Saturday",
+        "date": "2025-07-26",
+        "activityType": "Test",
+        "title": "45-Minute Bike Test",
+        "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
+    },
+    {
+        "week": 9,
+        "dayOfWeek": "Sunday",
+        "date": "2025-07-27",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Monday",
+        "date": "2025-07-28",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-07-29",
+        "activityType": "Swim",
+        "title": "35-Minute Build Swim",
+        "details": "WU- 5 minutes easy swim\nMS- 4 x 5 minutes TP (test pace), with :30 sec RI (recovery interval)\nCD- 5 minutes easy swim"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-07-30",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Thursday",
+        "date": "2025-07-31",
+        "activityType": "Run",
+        "title": "50-Minute Build Run",
+        "details": "WU- 10 minutes easy walk/ jog\nMS- 4 x 6 minutes TP (test pace), with 1 minute RI (recovery interval).\nCD- 8 minutes easy walk/ jog"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-01",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-02",
+        "activityType": "Brick",
+        "title": "65-Min Build Bike + 10-Min Run",
+        "details": "WU- 12 minutes easy\nMS- 4 x 10 minutes TP (test pace), with 1 minute RI (recovery\ninterval). Then run 10 minutes gradually building to TP.\nCD- 10 minutes easy"
+    },
+    {
+        "week": 10,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-03",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Monday",
+        "date": "2025-08-04",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-08-05",
+        "activityType": "Swim",
+        "title": "25-Minute Peak Swim",
+        "details": "WU: 5 minutes easy\nMS: Swim 75% of goal race distance at goal race pace. Take breaks as\nneeded."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-08-06",
+        "activityType": "Bike",
+        "title": "45-Minute Easy Bike",
+        "details": "Ride easy/ conversational, and use an easy gear with a high cadence."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Thursday",
+        "date": "2025-08-07",
+        "activityType": "Run",
+        "title": "30-Minute Peak Run",
+        "details": "WU- walk/ jog 5 minutes easy\nMS- Run/ walk 50% of goal race distance at goal race pace.\nCD- walk/ jog 5 minutes easy"
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-08",
+        "activityType": "Swim",
+        "title": "20-Minute Easy Swim",
+        "details": "Swim easy, taking breaks as needed."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-09",
+        "activityType": "Bike",
+        "title": "45-Minute Peak Bike",
+        "details": "WU- 5 minutes easy spin\nMS- Bike 75% of goal race distance at goal race pace alternating 10\nminutes \u2018on\u2019, 5 minutes \u2018easy\u2019.\nCD- 5 minutes easy spin."
+    },
+    {
+        "week": 11,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-10",
+        "activityType": "Run",
+        "title": "30-Minute Easy Run",
+        "details": "Run/ walk easy (conversational), taking breaks as needed."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Monday",
+        "date": "2025-08-11",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Tuesday",
+        "date": "2025-08-12",
+        "activityType": "Run",
+        "title": "20-Minute Taper Run",
+        "details": "Run 33% of goal race distance at goal race pace alternating run 4\nminutes/ brisk walk 1 minute."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Wednesday",
+        "date": "2025-08-13",
+        "activityType": "Bike",
+        "title": "30-Minute Taper Bike",
+        "details": "Ride 50% of goal race distance at goal race pace alternating 10 minutes\n\u2018on\u2019, 5 minutes \u2018easy.\u2019"
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Thursday",
+        "date": "2025-08-14",
+        "activityType": "Swim",
+        "title": "15-Minute Taper Swim",
+        "details": "Swim 50% of goal race distance at goal race pace, taking breaks as\nneeded. Practice in wetsuit if you plan to wear one in the race. Use\nthe swim venue if possible, otherwise it is OK to wear the wetsuit in\nthe pool."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Friday",
+        "date": "2025-08-15",
+        "activityType": "Rest",
+        "title": "Day Off",
+        "details": "Take the day off."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Saturday",
+        "date": "2025-08-16",
+        "activityType": "Brick",
+        "title": "20-Min Pre-Race Brick",
+        "details": "Bike 15 minutes progressing to race pace, then run 5 minutes\nprogressing to race pace."
+    },
+    {
+        "week": 12,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-17",
+        "activityType": "Race",
+        "title": "RACE DAY",
+        "details": "Arrive early, trust your sprint training plan, have fun!"
+    }
+]
+    </script>
 
     <script>
         function toggleTheme() {
@@ -1588,15 +1352,15 @@
             return string.charAt(0).toUpperCase() + string.slice(1);
         }
 
+        let activeFilterButton = null;
         function filterEvents(type, button = null) {
             const cells = document.querySelectorAll('.calendar td');
             const legendItems = document.querySelectorAll('.legend-item');
-            const activeButton = button || event.currentTarget;
+            const clickedButton = button || event.currentTarget; 
             
-            // Check if the clicked button is already active
-            if (activeButton.classList.contains('active')) {
-                // If it's active, deactivate it and show all
-                activeButton.classList.remove('active');
+            if (clickedButton.classList.contains('active')) {
+                clickedButton.classList.remove('active');
+                activeFilterButton = null;
                 cells.forEach(cell => {
                     cell.style.opacity = '1';
                     cell.style.transform = 'scale(1)';
@@ -1604,23 +1368,27 @@
                 return;
             }
             
-            // Remove active class from all legend items
             legendItems.forEach(item => item.classList.remove('active'));
-            
-            // Add active class to clicked legend item
-            activeButton.classList.add('active');
+            clickedButton.classList.add('active');
+            activeFilterButton = clickedButton;
             
             cells.forEach(cell => {
+                let typeMatch = false;
                 if (type === 'all') {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
+                    typeMatch = true;
+                } else if (type === 'completed') {
+                    if (cell.classList.contains('workout-complete')) {
+                        typeMatch = true;
+                    }
                 } else if (type === 'brick' && (cell.classList.contains('brick') || cell.classList.contains('cross'))) {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
-                } else if (type === 'empty' && cell.classList.contains('empty')) {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
-                } else if (cell.classList.contains(type)) {
+                    typeMatch = true;
+                } else if (type === 'empty' && cell.classList.contains('empty') && !cell.classList.contains('has-event')) {
+                     typeMatch = true;
+                } else if (cell.classList.contains(type.toLowerCase())) { 
+                    typeMatch = true;
+                }
+
+                if (typeMatch) {
                     cell.style.opacity = '1';
                     cell.style.transform = 'scale(1)';
                 } else {
@@ -1629,18 +1397,29 @@
                 }
             });
         }
-
-        // Initialize theme from localStorage
-        const savedTheme = localStorage.getItem('theme') || 'dark';
+        
+        const savedTheme = localStorage.getItem('theme') || 'dark'; 
         document.body.setAttribute('data-theme', savedTheme);
 
-        function showModal(date, activity) {
+        function showModal(formattedDate, activityTitle, activityDetails, workoutDateISO) {
             const modal = document.getElementById('activityModal');
-            const modalDate = document.getElementById('modalDate');
+            const modalDateEl = document.getElementById('modalDate'); 
             const modalActivity = document.getElementById('modalActivity');
+            const completeBtn = document.getElementById('markCompleteBtn');
 
-            modalDate.textContent = date;
-            modalActivity.textContent = activity;
+            modalDateEl.textContent = formattedDate;
+            modalActivity.innerHTML = `<strong>${activityTitle}</strong><br>${activityDetails.replace(/\n/g, '<br>')}`;
+            
+            completeBtn.dataset.workoutDate = workoutDateISO; 
+            
+            if (localStorage.getItem('workout-' + workoutDateISO) === 'completed') {
+                completeBtn.textContent = 'Mark as Incomplete';
+            } else {
+                completeBtn.textContent = 'Mark as Complete';
+            }
+            
+            completeBtn.style.display = (activityTitle === "-" || activityTitle === "Day Off" || !workoutDateISO) ? 'none' : 'block';
+
             modal.classList.add('show');
         }
 
@@ -1649,79 +1428,159 @@
             modal.classList.remove('show');
         }
 
-        function getMonthName(cell) {
-            const monthContainer = cell.closest('.month-container');
-            const monthHeader = monthContainer.querySelector('.month-header');
-            return monthHeader.textContent.split(' ')[0];
+        document.getElementById('activityModal').addEventListener('click', function(e) {
+            if (e.target === this) closeModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeModal();
+        });
+
+        const predefinedRaces = {
+            "2025-05-11": { title: "Sporting Life 10K", details: "Sporting Life 10K race event.", activityType: "Race" },
+            "2025-06-14": { title: "Ultra Armour 10K", details: "Ultra Armour 10K race event.", activityType: "Race" },
+            "2025-10-19": { title: "Toronto Marathon", details: "Toronto Marathon race event.", activityType: "Race" }
+        };
+
+        function generateCalendar(year, month, monthName, trainingData, existingRaces) {
+            const monthContainer = document.querySelector(`.month-container[data-month="${month}"][data-year="${year}"]`);
+            const tbody = monthContainer.querySelector('tbody');
+            tbody.innerHTML = ''; 
+
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const firstDayOfMonth = new Date(year, month, 1).getDay(); 
+            
+            let dateCounter = 1; 
+            for (let i = 0; i < 6; i++) { 
+                const row = document.createElement('tr');
+                for (let j = 0; j < 7; j++) {
+                    const cell = document.createElement('td');
+                    const dateDiv = document.createElement('div');
+                    dateDiv.classList.add('date');
+                    const eventContentDiv = document.createElement('div');
+                    eventContentDiv.classList.add('event-content');
+
+                    if (i === 0 && j < firstDayOfMonth) {
+                        cell.classList.add('empty');
+                        dateDiv.textContent = '';
+                        eventContentDiv.textContent = '';
+                    } else if (dateCounter > daysInMonth) {
+                        cell.classList.add('empty');
+                        dateDiv.textContent = '';
+                        eventContentDiv.textContent = '';
+                    } else {
+                        dateDiv.textContent = dateCounter;
+                        const currentDateStrISO = `${year}-${String(month + 1).padStart(2, '0')}-${String(dateCounter).padStart(2, '0')}`;
+                        cell.dataset.date = currentDateStrISO; 
+
+                        const workout = trainingData.find(w => w.date === currentDateStrISO);
+                        const predefRace = existingRaces[currentDateStrISO];
+                        
+                        let eventTitle = "-";
+                        let eventDetails = "";
+                        let eventActivityType = "empty"; 
+                        let isClickable = false;
+                        let isWorkout = false;
+
+                        if (workout) {
+                            eventTitle = workout.title;
+                            eventDetails = workout.details;
+                            eventActivityType = workout.activityType.toLowerCase();
+                            isClickable = true;
+                            isWorkout = true;
+                        } else if (predefRace) {
+                            eventTitle = predefRace.title;
+                            eventDetails = predefRace.details;
+                            eventActivityType = predefRace.activityType.toLowerCase();
+                            isClickable = true;
+                        }
+                        
+                        eventContentDiv.textContent = capitalizeFirstLetter(eventTitle);
+                        cell.classList.add(eventActivityType);
+                        if (eventActivityType !== 'empty' || predefRace) {
+                             cell.classList.add('has-event'); 
+                        } else {
+                            cell.classList.add('empty'); 
+                        }
+
+                        if (localStorage.getItem('workout-' + currentDateStrISO) === 'completed') {
+                            cell.classList.add('workout-complete');
+                        }
+
+                        if (isClickable) {
+                             // Pass isWorkout to showModal to control button visibility if needed, 
+                             // but currently handled by title check in showModal
+                            cell.onclick = () => showModal(`${monthName} ${dateDiv.textContent}, ${year}`, eventTitle, eventDetails, currentDateStrISO);
+                        }
+                        
+                        const today = new Date();
+                        if (dateCounter === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
+                            cell.classList.add('current-day');
+                            if (eventTitle !== "-") {
+                                document.getElementById('todayActivity').textContent = `${eventTitle}`;
+                                document.getElementById('todayNotification').classList.add('show');
+                            } else {
+                                document.getElementById('todayActivity').textContent = "No scheduled activity.";
+                                document.getElementById('todayNotification').classList.add('show');
+                            }
+                        }
+                        dateCounter++;
+                    }
+                    cell.appendChild(dateDiv);
+                    cell.appendChild(eventContentDiv);
+                    row.appendChild(cell);
+                }
+                tbody.appendChild(row);
+                if (dateCounter > daysInMonth && i < 5) { 
+                     if (dateCounter > daysInMonth) break;
+                }
+            }
         }
 
-        // Close modal when clicking outside
-        document.getElementById('activityModal').addEventListener('click', function(e) {
-            if (e.target === this) {
-                closeModal();
-            }
-        });
-
-        // Add click handlers for calendar cells and capitalize content
-        document.querySelectorAll('.calendar td').forEach(cell => {
-            const eventContent = cell.querySelector('.event-content');
-            if (eventContent) {
-                eventContent.textContent = capitalizeFirstLetter(eventContent.textContent);
-            }
-            
-            cell.addEventListener('click', () => {
-                const content = cell.querySelector('.event-content').textContent;
-                const date = cell.querySelector('.date').textContent;
-                if (content && content !== '-') {
-                    showModal(`${getMonthName(cell)} ${date}, 2025`, content);
-                }
-            });
-        });
-
-        // Initialize the calendar with "Show All" state and highlight current day
         document.addEventListener('DOMContentLoaded', function() {
-            const showAllButton = document.querySelector('.legend-item');
+            const trainingPlan = JSON.parse(document.getElementById('trainingPlanData').textContent);
+            
+            generateCalendar(2025, 4, "May", trainingPlan, predefinedRaces); 
+            generateCalendar(2025, 5, "June", trainingPlan, predefinedRaces);
+            generateCalendar(2025, 6, "July", trainingPlan, predefinedRaces);
+            generateCalendar(2025, 7, "August", trainingPlan, predefinedRaces);
+            generateCalendar(2025, 8, "September", [], predefinedRaces); 
+            generateCalendar(2025, 9, "October", [], predefinedRaces);   
+
+            const showAllButton = document.querySelector('.legend-item[onclick*="\'all\'"]');
             if (showAllButton) {
-                filterEvents('all', showAllButton);
+                filterEvents('all', showAllButton); 
             }
+            updateCountdown();
 
-            // Get current date
-            const today = new Date();
-            const currentMonth = today.toLocaleString('default', { month: 'long' }).toUpperCase();
-            const currentDay = today.getDate();
+            const completeBtn = document.getElementById('markCompleteBtn');
+            completeBtn.addEventListener('click', function() {
+                const workoutDateISO = this.dataset.workoutDate;
+                if (!workoutDateISO) return;
 
-            // Find and highlight current day
-            document.querySelectorAll('.calendar td').forEach(cell => {
-                const dateDiv = cell.querySelector('.date');
-                if (dateDiv) {
-                    const monthContainer = cell.closest('.month-container');
-                    const monthHeader = monthContainer.querySelector('.month-header');
-                    const cellMonth = monthHeader.textContent.split(' ')[0];
-                    
-                    if (dateDiv.textContent == currentDay && cellMonth === currentMonth) {
-                        cell.classList.add('current-day');
-                        const content = cell.querySelector('.event-content').textContent;
-                        if (content && content !== '-') {
-                            document.getElementById('todayActivity').textContent = content;
-                            document.getElementById('todayNotification').classList.add('show');
-                        }
-                    }
+                const cell = document.querySelector(`.calendar td[data-date="${workoutDateISO}"]`);
+                if (!cell) return;
+
+                if (localStorage.getItem('workout-' + workoutDateISO) === 'completed') {
+                    localStorage.removeItem('workout-' + workoutDateISO);
+                    this.textContent = 'Mark as Complete';
+                    cell.classList.remove('workout-complete');
+                } else {
+                    localStorage.setItem('workout-' + workoutDateISO, 'completed');
+                    this.textContent = 'Mark as Incomplete';
+                    cell.classList.add('workout-complete');
+                }
+                // Re-apply filter if one is active to update view
+                if(activeFilterButton) {
+                    const currentFilterType = activeFilterButton.getAttribute('onclick').match(/'([^']+)'/)[1];
+                    filterEvents(currentFilterType, activeFilterButton);
                 }
             });
         });
 
-        // Handle escape key for modal
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                closeModal();
-            }
-        });
-
-        // Add race dates and names
         const races = [
             { date: new Date('2025-05-11T08:30:00-04:00'), name: 'Sporting Life 10K' },
             { date: new Date('2025-06-14T08:30:00-04:00'), name: 'Ultra Armour 10K' },
-            { date: new Date('2025-08-17T08:30:00-04:00'), name: 'Toronto MultiSport Triathlon' },
+            { date: new Date(JSON.parse(document.getElementById('trainingPlanData').textContent).find(e => e.activityType === "Race").date + 'T08:30:00-04:00'), name: 'Toronto MultiSport Triathlon (Plan)' }, 
             { date: new Date('2025-10-19T08:30:00-04:00'), name: 'Toronto Marathon' }
         ];
 
@@ -1730,7 +1589,6 @@
             let nextRace = null;
             let timeDiff = Infinity;
 
-            // Find the next upcoming race
             for (const race of races) {
                 const diff = race.date - now;
                 if (diff > 0 && diff < timeDiff) {
@@ -1745,18 +1603,16 @@
                 const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
                 const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
 
-                document.getElementById('nextRaceName').textContent = `Next Race: ${nextRace.name} (8:30 AM EST)`;
+                document.getElementById('nextRaceName').textContent = `Next Race: ${nextRace.name}`;
                 document.getElementById('countdownTime').textContent = 
                     `${days}d ${hours}h ${minutes}m ${seconds}s`;
             } else {
-                document.getElementById('nextRaceName').textContent = 'No upcoming races';
-                document.getElementById('countdownTime').textContent = '';
+                document.getElementById('nextRaceName').textContent = 'No upcoming races in plan';
+                document.getElementById('countdownTime').textContent = 'Check back later!';
             }
         }
-
-        // Update countdown every second
         setInterval(updateCountdown, 1000);
-        updateCountdown(); // Initial update
+
     </script>
 </body>
 </html>
