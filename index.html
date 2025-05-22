@@ -22,7 +22,6 @@
             --bike-color: #f59e0b;
             --brick-color: #8b5cf6; /* Used for Brick and Cross */
             --rest-color: #64748b;
-            --test-color: #eab308; /* Yellow for Test */
             --race-day-color: var(--accent-red); 
             --none-color: #94a3b8;
             --completed-color: #22c55e; /* Distinct Green for completed */
@@ -45,7 +44,6 @@
             --bike-color: #fbbf24;
             --brick-color: #a78bfa; 
             --rest-color: #94a3b8;
-            --test-color: #facc15; 
             --race-day-color: var(--accent-red);
             --none-color: #475569;
             --completed-color: #4ade80; /* Distinct Green for completed - dark theme */
@@ -201,12 +199,12 @@
             color: var(--primary-dark);
         }
         
-        .run, .swim, .bike, .brick, .rest, .test, .cross, .race-day { 
+        .run, .swim, .bike, .brick, .rest, .cross, .race-day { 
             position: relative;
             overflow: hidden;
         }
 
-        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .test::before, .cross::before, .race-day::before {
+        .run::before, .swim::before, .bike::before, .brick::before, .rest::before, .cross::before, .race-day::before {
             content: '';
             position: absolute;
             top: 0;
@@ -226,16 +224,6 @@
         .brick { color: var(--brick-color); }
         .cross { color: var(--brick-color); } 
         .rest { color: var(--rest-color); font-weight: 500; }
-        .test { color: var(--test-color); }
-        /* Added .test::before rule */
-        .test::before { 
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: currentColor; /* Uses --test-color */
-            opacity: 0.25;
-            z-index: -1;
-        }
 
 
         .race-day {
@@ -265,7 +253,14 @@
             font-size: 0.8em;
             margin-left: 5px;
             font-weight: bold;
+            animation: fadeInCheck 0.3s ease-in-out;
         }
+
+        @keyframes fadeInCheck {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
         .workout-complete.has-event::before { 
             content: '';
             position: absolute;
@@ -277,8 +272,7 @@
             z-index: 0; 
         }
         .workout-complete.run::before, .workout-complete.swim::before, 
-        .workout-complete.bike::before, .workout-complete.brick::before, 
-        .workout-complete.test::before, .workout-complete.rest::before {
+        .workout-complete.bike::before, .workout-complete.brick::before, .workout-complete.rest::before {
             opacity: 0.15; 
         }
         .workout-complete.race-day::before { 
@@ -377,7 +371,7 @@
             backdrop-filter: blur(4px);
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out; /* Smoother easing */
         }
 
         .modal.show { display: flex; opacity: 1; }
@@ -392,7 +386,7 @@
             width: 500px;
             position: relative;
             transform: translateY(-20px);
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out; /* Smoother easing */
             border: 1px solid var(--glass-border);
             box-shadow: var(--box-shadow);
         }
@@ -470,7 +464,7 @@
             color: var(--text-color);
             max-width: 250px;
             opacity: 0;
-            transition: opacity 0.3s ease;
+            transition: opacity 0.3s ease-in-out; /* Smoother easing for consistency */
             z-index: 1000;
         }
 
@@ -562,10 +556,6 @@
         <div class="legend-item" onclick="filterEvents('brick', this)">
             <div class="legend-color" style="background-color: var(--brick-color);"></div>
             <div>Brick/Cross</div>
-        </div>
-         <div class="legend-item" onclick="filterEvents('test', this)">
-            <div class="legend-color" style="background-color: var(--test-color);"></div>
-            <div>Test</div>
         </div>
         <div class="legend-item" onclick="filterEvents('rest', this)">
             <div class="legend-color" style="background-color: var(--rest-color);"></div>
@@ -675,8 +665,8 @@
         "week": 1,
         "dayOfWeek": "Tuesday",
         "date": "2025-05-27",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -691,8 +681,8 @@
         "week": 1,
         "dayOfWeek": "Thursday",
         "date": "2025-05-29",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -707,8 +697,8 @@
         "week": 1,
         "dayOfWeek": "Saturday",
         "date": "2025-05-31",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -899,8 +889,8 @@
         "week": 5,
         "dayOfWeek": "Tuesday",
         "date": "2025-06-24",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -915,8 +905,8 @@
         "week": 5,
         "dayOfWeek": "Thursday",
         "date": "2025-06-26",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -931,8 +921,8 @@
         "week": 5,
         "dayOfWeek": "Saturday",
         "date": "2025-06-28",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -1123,8 +1113,8 @@
         "week": 9,
         "dayOfWeek": "Tuesday",
         "date": "2025-07-22",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -1139,8 +1129,8 @@
         "week": 9,
         "dayOfWeek": "Thursday",
         "date": "2025-07-24",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -1155,8 +1145,8 @@
         "week": 9,
         "dayOfWeek": "Saturday",
         "date": "2025-07-26",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -1332,287 +1322,147 @@
         "dayOfWeek": "Sunday",
         "date": "2025-08-17",
         "activityType": "Race",
-        "title": "RACE DAY",
+        "title": "Toronto Island Multisport Triathlon",
         "details": "Arrive early, trust your sprint training plan, have fun!"
+    },
+    {
+        "week": 13,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-24",
+        "activityType": "Run",
+        "title": "Marathon Training: 8 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 14,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-31",
+        "activityType": "Run",
+        "title": "Marathon Training: 9 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 15,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-07",
+        "activityType": "Run",
+        "title": "Marathon Training: 6 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 16,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-14",
+        "activityType": "Run",
+        "title": "Marathon Training: 11 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 17,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-21",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 18,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-28",
+        "activityType": "Run",
+        "title": "Marathon Training: 9 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 19,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-05",
+        "activityType": "Run",
+        "title": "Marathon Training: 14 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 20,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-12",
+        "activityType": "Run",
+        "title": "Marathon Training: 15 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 21,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-19",
+        "activityType": "Run",
+        "title": "Marathon Training: 13 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 22,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-26",
+        "activityType": "Run",
+        "title": "Marathon Training: 17 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 23,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-02",
+        "activityType": "Run",
+        "title": "Marathon Training: 18 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 24,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-09",
+        "activityType": "Run",
+        "title": "Marathon Training: 13 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 25,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-16",
+        "activityType": "Run",
+        "title": "Marathon Training: 20 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 26,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-23",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 27,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-30",
+        "activityType": "Run",
+        "title": "Marathon Training: 20 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 28,
+        "dayOfWeek": "Sunday",
+        "date": "2025-12-07",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 29,
+        "dayOfWeek": "Sunday",
+        "date": "2025-12-14",
+        "activityType": "Run",
+        "title": "Marathon Training: 8 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
     }
 ]
     </script>
 
     <script>
-        function toggleTheme() {
-            const body = document.body;
-            const currentTheme = body.getAttribute('data-theme');
-            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
-            body.setAttribute('data-theme', newTheme);
-            localStorage.setItem('theme', newTheme);
-        }
-
-        function capitalizeFirstLetter(string) {
-            if (!string || string === '-') return string;
-            return string.charAt(0).toUpperCase() + string.slice(1);
-        }
-
-        let activeFilterButton = null;
-        function filterEvents(type, button = null) {
-            const cells = document.querySelectorAll('.calendar td');
-            const legendItems = document.querySelectorAll('.legend-item');
-            const clickedButton = button || event.currentTarget; 
-            
-            if (clickedButton.classList.contains('active')) {
-                clickedButton.classList.remove('active');
-                activeFilterButton = null;
-                cells.forEach(cell => {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
-                });
-                return;
-            }
-            
-            legendItems.forEach(item => item.classList.remove('active'));
-            clickedButton.classList.add('active');
-            activeFilterButton = clickedButton;
-            
-            cells.forEach(cell => {
-                let typeMatch = false;
-                if (type === 'all') {
-                    typeMatch = true;
-                } else if (type === 'completed') {
-                    if (cell.classList.contains('workout-complete')) {
-                        typeMatch = true;
-                    }
-                } else if (type === 'brick' && (cell.classList.contains('brick') || cell.classList.contains('cross'))) {
-                    typeMatch = true;
-                } else if (type === 'empty' && cell.classList.contains('empty') && !cell.classList.contains('has-event')) {
-                     typeMatch = true;
-                } else if (cell.classList.contains(type.toLowerCase())) { 
-                    typeMatch = true;
-                }
-
-                if (typeMatch) {
-                    cell.style.opacity = '1';
-                    cell.style.transform = 'scale(1)';
-                } else {
-                    cell.style.opacity = '0.3';
-                    cell.style.transform = 'scale(0.95)';
-                }
-            });
-        }
-        
-        const savedTheme = localStorage.getItem('theme') || 'dark'; 
-        document.body.setAttribute('data-theme', savedTheme);
-
-        function showModal(formattedDate, activityTitle, activityDetails, workoutDateISO) {
-            const modal = document.getElementById('activityModal');
-            const modalDateEl = document.getElementById('modalDate'); 
-            const modalActivity = document.getElementById('modalActivity');
-            const completeBtn = document.getElementById('markCompleteBtn');
-
-            modalDateEl.textContent = formattedDate;
-            modalActivity.innerHTML = `<strong>${activityTitle}</strong><br>${activityDetails.replace(/\n/g, '<br>')}`;
-            
-            completeBtn.dataset.workoutDate = workoutDateISO; 
-            
-            if (localStorage.getItem('workout-' + workoutDateISO) === 'completed') {
-                completeBtn.textContent = 'Mark as Incomplete';
-            } else {
-                completeBtn.textContent = 'Mark as Complete';
-            }
-            
-            completeBtn.style.display = (activityTitle === "-" || activityTitle === "Day Off" || !workoutDateISO) ? 'none' : 'block';
-
-            modal.classList.add('show');
-        }
-
-        function closeModal() {
-            const modal = document.getElementById('activityModal');
-            modal.classList.remove('show');
-        }
-
-        document.getElementById('activityModal').addEventListener('click', function(e) {
-            if (e.target === this) closeModal();
-        });
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeModal();
-        });
-
-        const predefinedRaces = {
-            "2025-05-11": { title: "Sporting Life 10K", details: "Sporting Life 10K race event.", activityType: "Race" },
-            "2025-06-14": { title: "Ultra Armour 10K", details: "Ultra Armour 10K race event.", activityType: "Race" },
-            "2025-10-19": { title: "Toronto Marathon", details: "Toronto Marathon race event.", activityType: "Race" }
-        };
-
-        function generateCalendar(year, month, monthName, trainingData, existingRaces) {
-            const monthContainer = document.querySelector(`.month-container[data-month="${month}"][data-year="${year}"]`);
-            const tbody = monthContainer.querySelector('tbody');
-            tbody.innerHTML = ''; 
-
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDayOfMonth = new Date(year, month, 1).getDay(); 
-            
-            let dateCounter = 1; 
-            for (let i = 0; i < 6; i++) { 
-                const row = document.createElement('tr');
-                for (let j = 0; j < 7; j++) {
-                    const cell = document.createElement('td');
-                    const dateDiv = document.createElement('div');
-                    dateDiv.classList.add('date');
-                    const eventContentDiv = document.createElement('div');
-                    eventContentDiv.classList.add('event-content');
-
-                    if (i === 0 && j < firstDayOfMonth) {
-                        cell.classList.add('empty');
-                        dateDiv.textContent = '';
-                        eventContentDiv.textContent = '';
-                    } else if (dateCounter > daysInMonth) {
-                        cell.classList.add('empty');
-                        dateDiv.textContent = '';
-                        eventContentDiv.textContent = '';
-                    } else {
-                        dateDiv.textContent = dateCounter;
-                        const currentDateStrISO = `${year}-${String(month + 1).padStart(2, '0')}-${String(dateCounter).padStart(2, '0')}`;
-                        cell.dataset.date = currentDateStrISO; 
-
-                        const workout = trainingData.find(w => w.date === currentDateStrISO);
-                        const predefRace = existingRaces[currentDateStrISO];
-                        
-                        let eventTitle = "-";
-                        let eventDetails = "";
-                        let eventActivityType = "empty"; 
-                        let isClickable = false;
-                        let isWorkout = false;
-
-                        if (workout) {
-                            eventTitle = workout.title;
-                            eventDetails = workout.details;
-                            eventActivityType = workout.activityType.toLowerCase();
-                            isClickable = true;
-                            isWorkout = true;
-                        } else if (predefRace) {
-                            eventTitle = predefRace.title;
-                            eventDetails = predefRace.details;
-                            eventActivityType = predefRace.activityType.toLowerCase();
-                            isClickable = true;
-                        }
-                        
-                        eventContentDiv.textContent = capitalizeFirstLetter(eventTitle);
-                        cell.classList.add(eventActivityType);
-                        if (eventActivityType !== 'empty' || predefRace) {
-                             cell.classList.add('has-event'); 
-                        } else {
-                            cell.classList.add('empty'); 
-                        }
-
-                        if (localStorage.getItem('workout-' + currentDateStrISO) === 'completed') {
-                            cell.classList.add('workout-complete');
-                        }
-
-                        if (isClickable) {
-                             // Pass isWorkout to showModal to control button visibility if needed, 
-                             // but currently handled by title check in showModal
-                            cell.onclick = () => showModal(`${monthName} ${dateDiv.textContent}, ${year}`, eventTitle, eventDetails, currentDateStrISO);
-                        }
-                        
-                        const today = new Date();
-                        if (dateCounter === today.getDate() && year === today.getFullYear() && month === today.getMonth()) {
-                            cell.classList.add('current-day');
-                            if (eventTitle !== "-") {
-                                document.getElementById('todayActivity').textContent = `${eventTitle}`;
-                                document.getElementById('todayNotification').classList.add('show');
-                            } else {
-                                document.getElementById('todayActivity').textContent = "No scheduled activity.";
-                                document.getElementById('todayNotification').classList.add('show');
-                            }
-                        }
-                        dateCounter++;
-                    }
-                    cell.appendChild(dateDiv);
-                    cell.appendChild(eventContentDiv);
-                    row.appendChild(cell);
-                }
-                tbody.appendChild(row);
-                if (dateCounter > daysInMonth && i < 5) { 
-                     if (dateCounter > daysInMonth) break;
-                }
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', function() {
-            const trainingPlan = JSON.parse(document.getElementById('trainingPlanData').textContent);
-            
-            generateCalendar(2025, 4, "May", trainingPlan, predefinedRaces); 
-            generateCalendar(2025, 5, "June", trainingPlan, predefinedRaces);
-            generateCalendar(2025, 6, "July", trainingPlan, predefinedRaces);
-            generateCalendar(2025, 7, "August", trainingPlan, predefinedRaces);
-            generateCalendar(2025, 8, "September", [], predefinedRaces); 
-            generateCalendar(2025, 9, "October", [], predefinedRaces);   
-
-            const showAllButton = document.querySelector('.legend-item[onclick*="\'all\'"]');
-            if (showAllButton) {
-                filterEvents('all', showAllButton); 
-            }
-            updateCountdown();
-
-            const completeBtn = document.getElementById('markCompleteBtn');
-            completeBtn.addEventListener('click', function() {
-                const workoutDateISO = this.dataset.workoutDate;
-                if (!workoutDateISO) return;
-
-                const cell = document.querySelector(`.calendar td[data-date="${workoutDateISO}"]`);
-                if (!cell) return;
-
-                if (localStorage.getItem('workout-' + workoutDateISO) === 'completed') {
-                    localStorage.removeItem('workout-' + workoutDateISO);
-                    this.textContent = 'Mark as Complete';
-                    cell.classList.remove('workout-complete');
-                } else {
-                    localStorage.setItem('workout-' + workoutDateISO, 'completed');
-                    this.textContent = 'Mark as Incomplete';
-                    cell.classList.add('workout-complete');
-                }
-                // Re-apply filter if one is active to update view
-                if(activeFilterButton) {
-                    const currentFilterType = activeFilterButton.getAttribute('onclick').match(/'([^']+)'/)[1];
-                    filterEvents(currentFilterType, activeFilterButton);
-                }
-            });
-        });
-
-        const races = [
-            { date: new Date('2025-05-11T08:30:00-04:00'), name: 'Sporting Life 10K' },
-            { date: new Date('2025-06-14T08:30:00-04:00'), name: 'Ultra Armour 10K' },
-            { date: new Date(JSON.parse(document.getElementById('trainingPlanData').textContent).find(e => e.activityType === "Race").date + 'T08:30:00-04:00'), name: 'Toronto MultiSport Triathlon (Plan)' }, 
-            { date: new Date('2025-10-19T08:30:00-04:00'), name: 'Toronto Marathon' }
-        ];
-
-        function updateCountdown() {
-            const now = new Date();
-            let nextRace = null;
-            let timeDiff = Infinity;
-
-            for (const race of races) {
-                const diff = race.date - now;
-                if (diff > 0 && diff < timeDiff) {
-                    timeDiff = diff;
-                    nextRace = race;
-                }
-            }
-
-            if (nextRace) {
-                const days = Math.floor(timeDiff / (1000 * 60 * 60 * 24));
-                const hours = Math.floor((timeDiff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                const minutes = Math.floor((timeDiff % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((timeDiff % (1000 * 60)) / 1000);
-
-                document.getElementById('nextRaceName').textContent = `Next Race: ${nextRace.name}`;
-                document.getElementById('countdownTime').textContent = 
-                    `${days}d ${hours}h ${minutes}m ${seconds}s`;
-            } else {
-                document.getElementById('nextRaceName').textContent = 'No upcoming races in plan';
-                document.getElementById('countdownTime').textContent = 'Check back later!';
-            }
-        }
-        setInterval(updateCountdown, 1000);
-
-    </script>
-</body>
-</html>
+>>>>>>> REPLACE

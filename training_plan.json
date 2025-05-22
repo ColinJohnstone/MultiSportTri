@@ -11,8 +11,8 @@
         "week": 1,
         "dayOfWeek": "Tuesday",
         "date": "2025-05-27",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -27,8 +27,8 @@
         "week": 1,
         "dayOfWeek": "Thursday",
         "date": "2025-05-29",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -43,8 +43,8 @@
         "week": 1,
         "dayOfWeek": "Saturday",
         "date": "2025-05-31",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -235,8 +235,8 @@
         "week": 5,
         "dayOfWeek": "Tuesday",
         "date": "2025-06-24",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -251,8 +251,8 @@
         "week": 5,
         "dayOfWeek": "Thursday",
         "date": "2025-06-26",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -267,8 +267,8 @@
         "week": 5,
         "dayOfWeek": "Saturday",
         "date": "2025-06-28",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -459,8 +459,8 @@
         "week": 9,
         "dayOfWeek": "Tuesday",
         "date": "2025-07-22",
-        "activityType": "Test",
-        "title": "30-Minute Swim Test",
+        "activityType": "Swim",
+        "title": "30-Minute Swim",
         "details": "WU- 5 to 10 minutes easy swim\nMS- Swim 15 minutes max distance\u2026 taking breaks if/ as needed.\nCD- 5 minutes easy swim"
     },
     {
@@ -475,8 +475,8 @@
         "week": 9,
         "dayOfWeek": "Thursday",
         "date": "2025-07-24",
-        "activityType": "Test",
-        "title": "45-Minute Run Test",
+        "activityType": "Run",
+        "title": "45-Minute Run",
         "details": "WU- 10 minutes easy walk/ jog\nMS- Run/ walk 30 minutes maximum distance.\nCD- 5 minutes easy walk"
     },
     {
@@ -491,8 +491,8 @@
         "week": 9,
         "dayOfWeek": "Saturday",
         "date": "2025-07-26",
-        "activityType": "Test",
-        "title": "45-Minute Bike Test",
+        "activityType": "Bike",
+        "title": "45-Minute Bike",
         "details": "WU- Ride 10 minutes easy\nMS- Ride 30 minutes maximum distance\nCD- Ride 5 minutes easy"
     },
     {
@@ -668,7 +668,143 @@
         "dayOfWeek": "Sunday",
         "date": "2025-08-17",
         "activityType": "Race",
-        "title": "RACE DAY",
+        "title": "Toronto Island Multisport Triathlon",
         "details": "Arrive early, trust your sprint training plan, have fun!"
+    },
+    {
+        "week": 13,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-24",
+        "activityType": "Run",
+        "title": "Marathon Training: 8 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 14,
+        "dayOfWeek": "Sunday",
+        "date": "2025-08-31",
+        "activityType": "Run",
+        "title": "Marathon Training: 9 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 15,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-07",
+        "activityType": "Run",
+        "title": "Marathon Training: 6 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 16,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-14",
+        "activityType": "Run",
+        "title": "Marathon Training: 11 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 17,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-21",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 18,
+        "dayOfWeek": "Sunday",
+        "date": "2025-09-28",
+        "activityType": "Run",
+        "title": "Marathon Training: 9 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 19,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-05",
+        "activityType": "Run",
+        "title": "Marathon Training: 14 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 20,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-12",
+        "activityType": "Run",
+        "title": "Marathon Training: 15 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 21,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-19",
+        "activityType": "Run",
+        "title": "Marathon Training: 13 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 22,
+        "dayOfWeek": "Sunday",
+        "date": "2025-10-26",
+        "activityType": "Run",
+        "title": "Marathon Training: 17 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 23,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-02",
+        "activityType": "Run",
+        "title": "Marathon Training: 18 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 24,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-09",
+        "activityType": "Run",
+        "title": "Marathon Training: 13 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 25,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-16",
+        "activityType": "Run",
+        "title": "Marathon Training: 20 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 26,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-23",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 27,
+        "dayOfWeek": "Sunday",
+        "date": "2025-11-30",
+        "activityType": "Run",
+        "title": "Marathon Training: 20 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 28,
+        "dayOfWeek": "Sunday",
+        "date": "2025-12-07",
+        "activityType": "Run",
+        "title": "Marathon Training: 12 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
+    },
+    {
+        "week": 29,
+        "dayOfWeek": "Sunday",
+        "date": "2025-12-14",
+        "activityType": "Run",
+        "title": "Marathon Training: 8 Mile Long Run",
+        "details": "Hal Higdon Intermediate 1 Marathon Training Plan - Sunday Long Run."
     }
 ]
